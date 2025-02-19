@@ -1,0 +1,23 @@
+
+#canvas-container{
+    border: 1px solid black; 
+    height: 100%;
+}
+
+/* mobile screens */
+@media screen and (max-width: 800px) {
+    #canvas-container{
+        width: 100%;
+        
+    }
+  }
+
+/* desktop screens */
+@media screen and (min-width: 800px) {
+
+    #canvas-container{
+        width: 50%;
+        margin: auto;
+    }
+    
+}
