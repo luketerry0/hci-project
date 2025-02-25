@@ -18,7 +18,7 @@ export class PlinkoComponent {
 
   ngAfterViewInit() {
     this.width = this.canvas.nativeElement.offsetWidth;
-    this.height = this.canvas.nativeElement.offsetHeight;
+    this.height = 400;
   }
 
 
