@@ -1,14 +1,14 @@
 
 #canvas-container{
     border: 1px solid black; 
-    height: 100%;
+    height: 50vh;
 }
 
 /* mobile screens */
 @media screen and (max-width: 800px) {
     #canvas-container{
         width: 100%;
-        
+        height: 66vh;
     }
   }
 

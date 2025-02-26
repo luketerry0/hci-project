@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import p5 from 'p5';
-
+import Plinko from './plinko_board';
 
 @Component({
   selector: 'plinko',
@@ -12,18 +12,25 @@ import p5 from 'p5';
 export class PlinkoComponent {
 
   // access the canvas's div so we know how big to make the p5 canvas
-  @ViewChild('canvas-container') canvas!: ElementRef;
-  width: number = 0;
-  height: number = 0;
+  @ViewChild('canvasContainer') canvas!: ElementRef;
+  width: number = 10;
+  height: number = 10;
+  p5Canvas: any; //TODO make this typing better
 
   ngAfterViewInit() {
     this.width = this.canvas.nativeElement.offsetWidth;
-    this.height = 400;
+    this.height = this.canvas.nativeElement.offsetHeight;
+    console.log('Width:', this.width, 'Height:', this.height);
   }
+
+  // helper function to draw the plinko board
+
+
+  private plinko_board: Plinko = new Plinko()
 
 
   ngOnInit() {
-    const sketch = (s: any) => {
+    const sketch = (s: p5) => {
   
       s.preload = () => {
         // preload code
@@ -31,36 +38,22 @@ export class PlinkoComponent {
   
       s.setup = () => {
         s.createCanvas(this.width, this.height).parent('canvas-container');
-        console.log('created')
+        console.log('created');
       };
   
       let x = 25;
       s.draw = () => {
         // Clear the background
-        s.background(0);
+        s.background('white');
 
-        // Draw a circle, with hue determined by frameCount
-        s.fill(x / 3, 90, 90);
-        s.circle(x, s.height / 2, 50);
+        // draw the plinko board
+        this.plinko_board.draw_plinko(s);
 
-        // Increase the x variable by 5
-        x += 5;
-
-        // Reset the circle position after it moves off the right side
-        if (x > s.width + 25) {
-          x = -25;
-        }
-
-        s.describe('circle moving to the right');
       };
 
       s.mousePressed = () => {
-        // Start/stop the animation loop
-        if (s.isLooping()) {
-          s.noLoop();
-        } else {
-          s.loop();
-        }
+        // add a particle
+        this.plinko_board.add_particle(s.mouseX, s.mouseY, s);
       }
 
       s.keyPressed = () => {
@@ -69,7 +62,7 @@ export class PlinkoComponent {
       }
     }
   
-    let canvas = new p5(sketch);
+    this.p5Canvas = new p5(sketch);
   }
 
 }
