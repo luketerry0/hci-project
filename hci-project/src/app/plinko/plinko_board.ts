@@ -35,10 +35,10 @@ export default class Plinko{
                 this.particles.forEach((p : particle) => {
                     console.log(p.is_colliding(peg_x, peg_y, this.ops.peg_radius))
                     if (p.is_colliding(peg_x, peg_y, this.ops.peg_radius)){
-                        p.apply_force(
-                            p5.Vector.fromAngle(p.position.angleBetween(s.createVector(peg_x, peg_y)))
-                        );
-                        p.update()
+                        p.velocity = p.velocity.mult(-1)
+                        // .mult(
+                        //     p.position.dist(s.createVector(peg_x, peg_y))
+                        // )
                     }
 
                     // apply gravity to the particle

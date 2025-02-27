@@ -10,9 +10,9 @@ export default class Particle {
     constructor(x: number, y: number, s: p5){
         // this.pos replaces this.x and this.y
         this.position = s.createVector(x, y);
-        this.velocity = s.createVector(0, 0.1);
+        this.velocity = s.createVector(0, 0);
         this.acceleration = s.createVector(0, 0);
-        this.mass = 1000;
+        this.mass = 500;
         this.size = 10;
       }
 
