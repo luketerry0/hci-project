@@ -16,29 +16,11 @@ export class PlinkoComponent {
   width: number = 10;
   height: number = 10;
   p5Canvas: any; //TODO make this typing better
+
   ngAfterViewInit() {
-    this.width = this.canvas.nativeElement.offsetWidth || 500;
-    this.height = this.canvas.nativeElement.offsetHeight || 500;
-  
+    this.width = this.canvas.nativeElement.offsetWidth;
+    this.height = this.canvas.nativeElement.offsetHeight;
     console.log('Width:', this.width, 'Height:', this.height);
-  
-    if (this.p5Canvas) {
-      this.p5Canvas.resizeCanvas(this.width, this.height);
-      console.log('Resizing canvas to:', this.width, this.height);
-    } else {
-      const sketch = (s: p5) => {
-        s.setup = () => {
-          const canvas = s.createCanvas(this.width, this.height).parent(this.canvas.nativeElement);
-          console.log('Canvas created', canvas);
-        };
-        s.draw = () => {
-          s.background('white');
-          this.plinko_board.draw_plinko(s);
-        };
-      };
-  
-      this.p5Canvas = new p5(sketch);
-    }
   }
 
   // helper function to draw the plinko board
@@ -84,4 +66,3 @@ export class PlinkoComponent {
   }
 
 }
-
