@@ -1,0 +1,26 @@
+<div class="parent-container">
+
+  <button class="menu-button" (click)="toggleSidebar($event)">Menu</button>
+
+
+  <button class="dropdown-button" (click)="toggleDropdown($event)">Upgrade Menu</button>
+  <div [ngClass]="{'dropdown-menu': true, 'show': isDropdownOpen}">
+    <button class="dropdown-option">Faster Gravity $100</button>
+    <button class="dropdown-option">Expensive Buckets $50</button>
+    <button class="dropdown-option">Ball Upgrade $50</button>
+    <button class="dropdown-option">Extra Ball $80</button>
+    <button class="dropdown-option">Heavier Ball $75</button>
+    <button class="dropdown-option">Typing Speed $500</button>
+    <button class="dropdown-option">New Test $1,000</button>
+  </div>
+</div>
+
+<div [ngClass]="{'sidebar-open': isSidebarOpen}" class="sidebar">
+  <button class="close-btn" (click)="toggleSidebar($event)">X</button>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Settings</a></li>
+    <li><a href="#">Profile</a></li>
+    <li><a href="#">Buy Us a Coffee!</a></li>
+  </ul>
+</div>
