@@ -115,6 +115,8 @@ export class PlinkoComponent {
     this.p5Canvas = new p5(sketch);
   }
 
+
+}
   createParticle(x: number, y: number) {
     const particle_radius = 7;
     var p = new Particle(x,y,7, this.world);
@@ -122,4 +124,3 @@ export class PlinkoComponent {
   }
 
 }
-
