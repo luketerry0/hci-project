@@ -1,44 +1,46 @@
 import p5 from 'p5';
+import Matter from 'matter-js'
 
 export default class Particle {
-
-    position: p5.Vector;
-    velocity: p5.Vector;
-    acceleration: p5.Vector;
-    mass: number
-    size: number;
-    constructor(x: number, y: number, s: p5){
-        // this.pos replaces this.x and this.y
-        this.position = s.createVector(x, y);
-        this.velocity = s.createVector(0, 0);
-        this.acceleration = s.createVector(0, 0);
-        this.mass = 500;
-        this.size = 10;
-      }
-
-    // applies a force to a particle
-    apply_force(force: p5.Vector){
-        // account for the effect of weight on forces applied
-        force.div(this.mass);
-        this.acceleration.add(force);
+    ops = {
+        restitution: 1,
+        friction: 0
     }
 
-    // updates the particle based on it's current physics
-    update(){
-        this.velocity.add(this.acceleration);
-        this.position.add(this.velocity);
-        this.acceleration.mult(0);
+    body: Matter.Body;
+    r: number;
+    letter: string;
+    color: number[];
+
+    constructor(x: number,y: number,r: number, world: Matter.World){
+        this.body = Matter.Bodies.circle(x,y,r,this.ops);
+        this.r = r;
+        this.letter = 'abcdefghijklmnopqrstuvwxyz'[this.get_random_number(26)]
+        this.color = [this.get_random_number(255), this.get_random_number(255), this.get_random_number(255)]
+
+        Matter.World.add(world, this.body);
     }
 
-    // displays the particle
-    display(s: p5){
-        s.fill(0);
-        s.noStroke();
-        s.circle(this.position.x, this.position.y, this.size);
+    show(s: p5){
+        s.fill(s.random(255),s.random(255),s.random(255));
+        s.stroke(255);
+        var pos = this.body.position;
+        s.push();
+        s.translate(pos.x,pos.y);
+        s.rotate(this.body.angle);
+        s.text(this.letter, 0, 0);
+        s.pop();
+        console.log("IN SHOW")
     }
 
-    // calculates the angle at which a peg collides with this particle
-    is_colliding(x: number, y: number, peg_radius: number) : boolean | number{
-        return (((this.position.x - x)**2 + (this.position.y - y)**2)**0.5 <= peg_radius);
+    isOffscreen(s: p5){
+        var x = this.body.position.x;
+        var y = this.body.position.y;
+        return(x<-50 || x > s.width + 50 || y > s.height + 50);
+    }
+
+    // small helper function to get random number
+    private get_random_number(max: number){
+        return Math.floor(Math.random()*max);
     }
 }
