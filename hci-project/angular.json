@@ -25,9 +25,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/@pqina/flip/dist/flip.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/@pqina/flip/dist/flip.min.js"
+            ]
           },
           "configurations": {
             "production": {
