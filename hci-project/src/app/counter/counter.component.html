@@ -1,10 +1,11 @@
 <!-- counter.component.html -->
- <h1>counter</h1>
-<div class="tick" #tickElement>
-    <span data-layout="horizontal fit">
+ <div class="tick-container">
+<div class="tick" #tickElement data-credits="false" >
+    <span data-layout="horizontal">
       <span data-repeat="true" data-transform="arrive(5, .01) -> round -> split -> delay(rtl, 100, 150)">
         <span data-view="flip"></span>
       </span>
     </span>
   </div>
   
+</div>

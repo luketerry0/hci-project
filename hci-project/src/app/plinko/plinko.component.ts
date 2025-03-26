@@ -1,8 +1,10 @@
 import { Component, ViewChild, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import p5 from 'p5';
 import Peg from './peg';
+import Bucket from './bucket';
 import Matter from 'matter-js';
 import Particle from './particle';
+import { GameStateService } from '../services/game-state.service';
 
 
 @Component({
@@ -17,18 +19,20 @@ export class PlinkoComponent {
   // matter.js modules
   private Engine = Matter.Engine
   private World = Matter.World
-  private Bodies = Matter.Bodies
 
   engine: Matter.Engine;
   world: Matter.World;
   particles: Particle[] = [];
   pegs: Peg[] = [];
+  buckets: Bucket[] = [];
   rows = 10;
+  gameStateService : GameStateService
 
-  constructor(){
+  constructor(private gss: GameStateService){
     // create matter.js engine, world
     this.engine = this.Engine.create();
     this.world = this.engine.world;
+    this.gameStateService = gss;
   }
 
 
@@ -44,21 +48,9 @@ export class PlinkoComponent {
     console.log('Width:', this.width, 'Height:', this.height);
   }
 
-  // helper function to draw the plinko board
-
-
-  // private plinko_board: Plinko = new Plinko()
-
-
   ngOnInit() {
     const sketch = (s: p5) => {
 
-
-  
-      s.preload = () => {
-
-      }
-  
       s.setup = () => {
         // create corectly sized canvas
         s.createCanvas(this.width, this.height).parent('canvas-container');
@@ -66,15 +58,26 @@ export class PlinkoComponent {
         // draw the plinko board
         const spacing_between_pegs = 35;
         const peg_radius = 4;
-        for (let level = 0; level < 15; level++){
-          for (let i = 0; i < level+1; i++){
+        for (let level = 0; level < this.rows; level++){
+          for (let i = 0; i <= level; i++){
               // determine where the peg should be
               const peg_x = s.width / 2 + i*spacing_between_pegs- level*spacing_between_pegs/2;
               const peg_y = s.height / 10 + level*spacing_between_pegs;
               
-              // draw the peg
+              // keep track of the peg
               var p = new Peg( peg_x, peg_y, peg_radius, this.world);
               this.pegs.push(p);
+              
+              // if this is the last row, make a bucket under it
+              if (level == this.rows - 1 && i < level){
+                // calculate the value based on distance from the center peg
+                const value = s.map(
+                  Math.abs(i - ((level-1)/2)), 0, ((level-1)/2), 500, 20
+                );
+
+                var b = new Bucket(peg_x, peg_y + spacing_between_pegs/2, spacing_between_pegs, 30, value, 500);
+                this.buckets.push(b);
+              }
           }
         }
 
@@ -87,15 +90,22 @@ export class PlinkoComponent {
         // update the engine
         this.Engine.update(this.engine);
 
+        // draw the buckets
+        for (var i = 0; i < this.buckets.length; i++) {
+          this.buckets[i].show(s);
+        }
+
+        // draw the particles
         for (var i = 0; i < this.particles.length; i++) {
           this.particles[i].show(s);
-          if(this.particles[i].isOffscreen(s)) {
+          if(this.particles[i].isInBucket(s, this.buckets)) {
             this.World.remove(this.world, this.particles[i].body);
             this.particles.splice(i,1);
             i--;
           }
         }
 
+        // draw the pegs
         for (var i = 0; i < this.pegs.length; i++) {
           this.pegs[i].show(s);
         }
@@ -116,7 +126,7 @@ export class PlinkoComponent {
   }
   createParticle(x: number, y: number) {
     const particle_radius = 7;
-    var p = new Particle(x,y,7, this.world);
+    var p = new Particle(x,y,7, this.world, this.gameStateService);
     this.particles.push(p);
   }
 

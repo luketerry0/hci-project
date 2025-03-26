@@ -3,6 +3,8 @@
     font-size: 1rem;
     white-space: nowrap;
     font-family: arial, sans-serif;
+    width: auto;
+    height: 60px;
   }
   
   .tick-flip,
