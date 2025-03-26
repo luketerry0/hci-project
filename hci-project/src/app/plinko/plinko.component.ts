@@ -5,6 +5,7 @@ import Bucket from './bucket';
 import Matter from 'matter-js';
 import Particle from './particle';
 import { GameStateService } from '../services/game-state.service';
+import { TextService } from '../services/text.service';
 
 
 @Component({
@@ -27,12 +28,14 @@ export class PlinkoComponent {
   buckets: Bucket[] = [];
   rows = 10;
   gameStateService : GameStateService
+  textService: TextService
 
-  constructor(private gss: GameStateService){
+  constructor(private gss: GameStateService, private ts: TextService){
     // create matter.js engine, world
     this.engine = this.Engine.create();
     this.world = this.engine.world;
     this.gameStateService = gss;
+    this.textService = ts;
   }
 
 
@@ -50,6 +53,9 @@ export class PlinkoComponent {
 
   ngOnInit() {
     const sketch = (s: p5) => {
+      this.textService.letterTyped$.subscribe((letter) => {
+        this.createParticle(s.width / 2 + (Math.random()*10 - 5), (s.height/10) + 10, letter);
+      })
 
       s.setup = () => {
         // create corectly sized canvas
@@ -111,10 +117,11 @@ export class PlinkoComponent {
         }
       };
 
-      s.mousePressed = () => {
-        // add a particle
-        this.createParticle(s.mouseX, s.mouseY);
-      }
+      // code to drop a random letter when mouse is pressed
+      // s.mousePressed = () => {
+      //   // add a particle
+      //   // this.createParticle(s.mouseX, s.mouseY);
+      // }
 
       s.keyPressed = () => {
         // Draw one frame
@@ -124,9 +131,9 @@ export class PlinkoComponent {
   
     this.p5Canvas = new p5(sketch);
   }
-  createParticle(x: number, y: number) {
+  createParticle(x: number, y: number, letter: string) {
     const particle_radius = 7;
-    var p = new Particle(x,y,7, this.world, this.gameStateService);
+    var p = new Particle(x,y,7, this.world, this.gameStateService, letter);
     this.particles.push(p);
   }
 

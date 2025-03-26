@@ -15,10 +15,10 @@ export default class Particle {
     color: number[];
     gameStateService: GameStateService;
 
-    constructor(x: number,y: number,r: number, world: Matter.World, gss: GameStateService){
+    constructor(x: number,y: number,r: number, world: Matter.World, gss: GameStateService, letter: string){
         this.body = Matter.Bodies.circle(x,y,r,this.ops);
         this.r = r;
-        this.letter = 'abcdefghijklmnopqrstuvwxyz'[this.get_random_number(26)]
+        this.letter = letter; //'abcdefghijklmnopqrstuvwxyz'[this.get_random_number(26)]
         this.color = [this.get_random_number(255), this.get_random_number(255), this.get_random_number(255)]
         this.gameStateService = gss;
         Matter.World.add(world, this.body);
