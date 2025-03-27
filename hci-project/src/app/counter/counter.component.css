@@ -5,6 +5,7 @@
     font-family: arial, sans-serif;
     width: auto;
     height: 60px;
+    z-index: 0;
   }
   
   .tick-flip,

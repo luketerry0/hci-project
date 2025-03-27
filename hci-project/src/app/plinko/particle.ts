@@ -2,11 +2,14 @@ import p5 from 'p5';
 import Matter from 'matter-js'
 import Bucket from './bucket';
 import { GameStateService } from '../services/game-state.service';
+import { UPGRADES } from '../types';
 
 export default class Particle {
+    upgrades = {[UPGRADES.HEAVY_BALL] : false};
     ops = {
         restitution: 1,
-        friction: 0
+        friction: 0,
+        mass: this.upgrades[UPGRADES.HEAVY_BALL] ? 3 : 1
     }
 
     body: Matter.Body;
@@ -15,13 +18,15 @@ export default class Particle {
     color: number[];
     gameStateService: GameStateService;
 
-    constructor(x: number,y: number,r: number, world: Matter.World, gss: GameStateService, letter: string){
+    constructor(x: number,y: number,r: number, world: Matter.World, gss: GameStateService, letter: string, upgrades: any){
         this.body = Matter.Bodies.circle(x,y,r,this.ops);
         this.r = r;
-        this.letter = letter; //'abcdefghijklmnopqrstuvwxyz'[this.get_random_number(26)]
+        this.letter = letter == " " ? '_' : letter; //'abcdefghijklmnopqrstuvwxyz'[this.get_random_number(26)]
         this.color = [this.get_random_number(255), this.get_random_number(255), this.get_random_number(255)]
         this.gameStateService = gss;
         Matter.World.add(world, this.body);
+
+        this.upgrades[UPGRADES.HEAVY_BALL] = upgrades[UPGRADES.HEAVY_BALL];
     }
 
     show(s: p5){

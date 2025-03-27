@@ -6,6 +6,7 @@ import Matter from 'matter-js';
 import Particle from './particle';
 import { GameStateService } from '../services/game-state.service';
 import { TextService } from '../services/text.service';
+import { UPGRADES } from '../types';
 
 
 @Component({
@@ -29,6 +30,9 @@ export class PlinkoComponent {
   rows = 10;
   gameStateService : GameStateService
   textService: TextService
+  upgrades = {
+    [UPGRADES.HEAVY_BALL]: false
+  }
 
   constructor(private gss: GameStateService, private ts: TextService){
     // create matter.js engine, world
@@ -48,10 +52,13 @@ export class PlinkoComponent {
   ngAfterViewInit() {
     this.width = this.canvas.nativeElement.offsetWidth;
     this.height = this.canvas.nativeElement.offsetHeight;
-    console.log('Width:', this.width, 'Height:', this.height);
   }
 
   ngOnInit() {
+    this.gameStateService.upgrade$.subscribe((upgrade) => {
+      this.upgrades[upgrade] = true;
+    });
+
     const sketch = (s: p5) => {
       this.textService.letterTyped$.subscribe((letter) => {
         this.createParticle(s.width / 2 + (Math.random()*10 - 5), (s.height/10) + 10, letter);
@@ -133,7 +140,7 @@ export class PlinkoComponent {
   }
   createParticle(x: number, y: number, letter: string) {
     const particle_radius = 7;
-    var p = new Particle(x,y,7, this.world, this.gameStateService, letter);
+    var p = new Particle(x,y,7, this.world, this.gameStateService, letter, this.upgrades);
     this.particles.push(p);
   }
 

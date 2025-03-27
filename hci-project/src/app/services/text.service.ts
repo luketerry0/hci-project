@@ -31,16 +31,12 @@ export class TextService {
 
   pressKeyEvent(event: KeyboardEvent) {
     const key = event.key;
-    // console.log(key)
-    // console.log(this.curr_char)
     if (key == this.curr_char){
       this.letterSubject.next(key);
       this.curr_passage = this.curr_passage.slice(1);
-      console.log(this.curr_passage.length);
       while(this.curr_passage.length == 0){
         this.curr_line = this.curr_line + 1
         this.curr_passage = this.file_lines[this.curr_line];
-        console.log(this.curr_passage)
       }
       this.curr_char = this.curr_passage[0];
       this.currLineSubject.next(this.curr_passage.slice(0, this.string_length));

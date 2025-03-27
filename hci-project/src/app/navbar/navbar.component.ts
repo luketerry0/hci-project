@@ -1,5 +1,7 @@
 import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';  // Import CommonModule
+import { UPGRADES } from '../types';
+import { GameStateService } from '../services/game-state.service';
 
 @Component({
   selector: 'navbar',
@@ -9,6 +11,12 @@ import { CommonModule } from '@angular/common';  // Import CommonModule
   styleUrl: './navbar.component.css'
 })
 export class NavBarComponent {
+  gameStateService: GameStateService;
+  upgrades = UPGRADES;
+  constructor(gss: GameStateService){
+    this.gameStateService = gss;
+  }
+
   isDropdownOpen = false;
   isSidebarOpen = false;
 
@@ -21,5 +29,9 @@ export class NavBarComponent {
   toggleSidebar(event: Event) {
     event.stopPropagation();
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  buyUpgrade(upgrade: UPGRADES){
+    this.gameStateService.upgrade(upgrade);
   }
 }

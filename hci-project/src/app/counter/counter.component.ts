@@ -23,7 +23,6 @@ export class CounterComponent implements AfterViewInit {
     this.subscription = gss.currBalance$.subscribe((currBalance: number) => {
       this.currBalance = currBalance;
       if (this.tickInstance){
-        console.log("HERE");
         this.tickInstance.value = this.currBalance;
       }
     });
