@@ -5,9 +5,9 @@
 
   <button class="dropdown-button" (click)="toggleDropdown($event)">Upgrade Menu</button>
   <div [ngClass]="{'dropdown-menu': true, 'show': isDropdownOpen}">
-    <button class="dropdown-option"(click)="buyUpgrade(upgrades.HEAVY_BALL)">Faster Gravity $100</button>
-    <button class="dropdown-option">Expensive Buckets $50</button>
-    <button class="dropdown-option">Ball Upgrade $50</button>
+    <button class="dropdown-option"(click)="buyUpgrade(upgrades.HEAVY_BALL_MULTIPLIER)">Heavier Ball $500</button>
+    <button class="dropdown-option"(click)="buyUpgrade(upgrades.INVERSE_BOUNCE_MULTIPLER)">Less Bounce $500</button>
+    <button class="dropdown-option"(click)="buyUpgrade(upgrades.SMALL_BALL_MULTIPLER)">Shrink Ball $500</button>
     <button class="dropdown-option">Extra Ball $80</button>
     <button class="dropdown-option">Heavier Ball $75</button>
     <button class="dropdown-option">Typing Speed $500</button>

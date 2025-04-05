@@ -6,7 +6,7 @@ import Matter from 'matter-js';
 import Particle from './particle';
 import { GameStateService } from '../services/game-state.service';
 import { TextService } from '../services/text.service';
-import { UPGRADES } from '../types';
+import { GameState, UpgradeObject, UPGRADES } from '../types';
 
 
 @Component({
@@ -30,9 +30,8 @@ export class PlinkoComponent {
   rows = 10;
   gameStateService : GameStateService
   textService: TextService
-  upgrades = {
-    [UPGRADES.HEAVY_BALL]: false
-  }
+  upgrades: UpgradeObject;
+  config: GameState;
 
   constructor(private gss: GameStateService, private ts: TextService){
     // create matter.js engine, world
@@ -40,6 +39,8 @@ export class PlinkoComponent {
     this.world = this.engine.world;
     this.gameStateService = gss;
     this.textService = ts;
+    this.upgrades = this.gameStateService.getUpgrades();
+    this.config = this.gameStateService.getGameState();
   }
 
 
@@ -55,9 +56,13 @@ export class PlinkoComponent {
   }
 
   ngOnInit() {
-    this.gameStateService.upgrade$.subscribe((upgrade) => {
-      this.upgrades[upgrade] = true;
+    this.gameStateService.upgrade$.subscribe((upgrades) => {
+      this.upgrades = upgrades;
     });
+
+    this.gameStateService.gameState$.subscribe((new_game_state) => {
+      this.config = new_game_state;
+    })
 
     const sketch = (s: p5) => {
       this.textService.letterTyped$.subscribe((letter) => {
@@ -69,8 +74,8 @@ export class PlinkoComponent {
         s.createCanvas(this.width, this.height).parent('canvas-container');
 
         // draw the plinko board
-        const spacing_between_pegs = 35;
-        const peg_radius = 4;
+        const spacing_between_pegs = this.config.spacing_between_pegs;
+        const peg_radius = this.config.peg_radius;
         for (let level = 0; level < this.rows; level++){
           for (let i = 0; i <= level; i++){
               // determine where the peg should be
@@ -85,10 +90,11 @@ export class PlinkoComponent {
               if (level == this.rows - 1 && i < level){
                 // calculate the value based on distance from the center peg
                 const value = s.map(
-                  Math.abs(i - ((level-1)/2)), 0, ((level-1)/2), 500, 20
+                  Math.abs(i - ((level-1)/2)), 0, ((level-1)/2), this.config.max_bucket, this.config.min_bucket
                 );
 
-                var b = new Bucket(peg_x, peg_y + spacing_between_pegs/2, spacing_between_pegs, 30, value, 500);
+                var b = new Bucket(
+                  peg_x, peg_y + spacing_between_pegs/2, spacing_between_pegs, 30, value, 500);
                 this.buckets.push(b);
               }
           }
@@ -139,8 +145,8 @@ export class PlinkoComponent {
     this.p5Canvas = new p5(sketch);
   }
   createParticle(x: number, y: number, letter: string) {
-    const particle_radius = 7;
-    var p = new Particle(x,y,7, this.world, this.gameStateService, letter, this.upgrades);
+    console.log(this.upgrades);
+    var p = new Particle(x,y,this.config.ball_radius, this.world, this.gameStateService, letter, this.upgrades);
     this.particles.push(p);
   }
 
