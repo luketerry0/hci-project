@@ -19,6 +19,9 @@ export class UpgradesComponent {
     }
   buyUpgrade(upgrade: UPGRADES){
     this.gameStateService.upgrade(upgrade);
+
+    // const target = event.target as HTMLElement;
+    // target.blur();
   }
   getCost(upgrade: UPGRADES): number {
     return this.gameStateService.getUpgradeCost(upgrade);

@@ -12,11 +12,15 @@ import { TextService } from '../services/text.service';
 export class TyperComponent {
   textService: TextService;
   curr_line: string = "";
+  old_line: string = "";
 
   constructor(textService: TextService){
     this.textService = textService;
     this.textService.currLine$.subscribe((line) => {
       this.curr_line = line;
+    });
+    this.textService.oldLine$.subscribe((typed) => {
+      this.old_line = typed;
     });
   }
 

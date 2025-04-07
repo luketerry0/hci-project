@@ -56,13 +56,21 @@ export class PlinkoComponent {
   }
 
   ngOnInit() {
+
     this.gameStateService.upgrade$.subscribe((upgrades) => {
       this.upgrades = upgrades;
+  
+      // Trying to reload the text when it is updated, doesn't work yet
+      // const newTestIndex = this.upgrades[UPGRADES.NEW_TEST];
+      // this.textService.loadText(newTestIndex);
     });
-
+  
     this.gameStateService.gameState$.subscribe((new_game_state) => {
       this.config = new_game_state;
-    })
+    });
+  
+    // Load the initial text
+    this.textService.loadText(this.upgrades[UPGRADES.NEW_TEST]);
 
     const sketch = (s: p5) => {
       this.textService.letterTyped$.subscribe((letter) => {

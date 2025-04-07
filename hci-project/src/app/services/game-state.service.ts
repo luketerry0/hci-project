@@ -16,13 +16,13 @@ export class GameStateService {
     [UPGRADES.HEAVY_BALL_MULTIPLIER]: 500,
     [UPGRADES.INVERSE_BOUNCE_MULTIPLER]: 500,
     [UPGRADES.SMALL_BALL_MULTIPLER]: 500,
-    [UPGRADES.NEW_TEST]: 500
+    [UPGRADES.NEW_TEST]: 10000
   }
   upgrades = {
     [UPGRADES.HEAVY_BALL_MULTIPLIER]: 0,
     [UPGRADES.INVERSE_BOUNCE_MULTIPLER]: 4,
     [UPGRADES.SMALL_BALL_MULTIPLER]: 1,
-    [UPGRADES.NEW_TEST]: 5
+    [UPGRADES.NEW_TEST]: 0
   }
 
   game_state = {
@@ -56,7 +56,7 @@ export class GameStateService {
       this.upgradeSubject.next(this.upgrades);
     }
   }
-  
+
   getUpgradeCost(upgrade: UPGRADES): number {
     const base = this.upgrade_costs[upgrade];
     const level = this.upgrades[upgrade] || 0;
