@@ -15,12 +15,14 @@ export class GameStateService {
   upgrade_costs = {
     [UPGRADES.HEAVY_BALL_MULTIPLIER]: 500,
     [UPGRADES.INVERSE_BOUNCE_MULTIPLER]: 500,
-    [UPGRADES.SMALL_BALL_MULTIPLER]: 500
+    [UPGRADES.SMALL_BALL_MULTIPLER]: 500,
+    [UPGRADES.NEW_TEST]: 500
   }
   upgrades = {
     [UPGRADES.HEAVY_BALL_MULTIPLIER]: 0,
     [UPGRADES.INVERSE_BOUNCE_MULTIPLER]: 4,
-    [UPGRADES.SMALL_BALL_MULTIPLER]: 1
+    [UPGRADES.SMALL_BALL_MULTIPLER]: 1,
+    [UPGRADES.NEW_TEST]: 5
   }
 
   game_state = {
@@ -43,15 +45,22 @@ export class GameStateService {
     this.currBalance = this.currBalance + points;
     this.balanceSubject.next(this.currBalance);
   }
-
-  upgrade(curr_upgrade: UPGRADES){
+  upgrade(curr_upgrade: UPGRADES) {
+    const cost = this.getUpgradeCost(curr_upgrade);
     // check if we can afford the upgrade
-    if (this.currBalance >= this.upgrade_costs[curr_upgrade]){
-      this.currBalance = this.currBalance - this.upgrade_costs[curr_upgrade];
-      this.upgrades[curr_upgrade] += 1
+    if (this.currBalance >= cost) {
+      this.currBalance -= cost;
+      this.upgrades[curr_upgrade] += 1;
+  
       this.balanceSubject.next(this.currBalance);
       this.upgradeSubject.next(this.upgrades);
     }
+  }
+  
+  getUpgradeCost(upgrade: UPGRADES): number {
+    const base = this.upgrade_costs[upgrade];
+    const level = this.upgrades[upgrade] || 0;
+    return Math.floor(base * Math.pow(1.5, level));
   }
 
   getUpgrades(): UpgradeObject{

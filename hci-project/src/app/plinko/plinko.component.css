@@ -1,6 +1,6 @@
 
 #canvas-container{
-    height: 50vh;
+    height: 66vh;
 }
 
 /* mobile screens */
@@ -15,8 +15,7 @@
 @media screen and (min-width: 800px) {
 
     #canvas-container{
-        width: 50%;
-        margin: auto;
+        width: 100%;
     }
     
 }

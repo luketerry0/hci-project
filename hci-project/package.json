@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
     "@pqina/flip": "^1.8.4",
+    "lato-font": "^3.0.0",
     "matter-js": "^0.20.0",
     "p5": "^1.11.3",
     "rxjs": "~7.8.0",

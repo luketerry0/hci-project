@@ -4,11 +4,12 @@ import { PlinkoComponent } from './plinko/plinko.component';
 import { NavBarComponent } from './navbar/navbar.component';
 import { CounterComponent } from './counter/counter.component';
 import { TyperComponent } from './typer/typer.component';
+import { UpgradesComponent } from './upgrades/upgrades.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, PlinkoComponent, NavBarComponent, CounterComponent, TyperComponent],
+  imports: [RouterOutlet, PlinkoComponent, NavBarComponent, CounterComponent, TyperComponent, UpgradesComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'] // Note the correction here too
 })

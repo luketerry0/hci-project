@@ -1,0 +1,24 @@
+<p style="padding-left: 25%;">
+    Upgrades Menu
+  </p>
+  
+  <p style="display: flex">
+    <button class="button1" (click)="buyUpgrade(upgrades.HEAVY_BALL_MULTIPLIER)">
+      Heavier Ball ${{ getCost(upgrades.HEAVY_BALL_MULTIPLIER)}}
+    </button>
+  
+    <button class="button1" (click)="buyUpgrade(upgrades.INVERSE_BOUNCE_MULTIPLER)">
+      Less Bounce ${{ getCost(upgrades.INVERSE_BOUNCE_MULTIPLER)}}
+    </button>
+  </p>
+  
+  <p style="display: flex">
+    <button class="button1" (click)="buyUpgrade(upgrades.SMALL_BALL_MULTIPLER)">
+      Shrink Ball ${{ getCost(upgrades.SMALL_BALL_MULTIPLER)}}
+    </button>
+  
+    <button class="button1" (click)="buyUpgrade(upgrades.NEW_TEST)">
+      New Test ${{ getCost(upgrades.NEW_TEST)}}
+    </button>
+  </p>
+  
