@@ -16,7 +16,7 @@ export class GameStateService {
     [UPGRADES.HEAVY_BALL_MULTIPLIER]: 500,
     [UPGRADES.INVERSE_BOUNCE_MULTIPLER]: 500,
     [UPGRADES.SMALL_BALL_MULTIPLER]: 500,
-    [UPGRADES.NEW_TEST]: 10000
+    [UPGRADES.NEW_TEST]: 500
   }
   upgrades = {
     [UPGRADES.HEAVY_BALL_MULTIPLIER]: 0,
@@ -33,7 +33,7 @@ export class GameStateService {
     peg_radius: 4,
     ball_radius: 6
   }
-
+  
   private gameStateSubject = new Subject<GameState>();
   gameState$ = this.gameStateSubject.asObservable();
 

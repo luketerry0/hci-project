@@ -110,7 +110,7 @@
   text-decoration: none;
   color: white;
   display: block;
-  padding: 15px 16px; /* Increase padding to make buttons taller */
+  padding: 15px 16px; /*Increase padding to make buttons taller*/
   font-size: 16px; /* Optional: increase font size */
   height: 50px; /* Explicitly set height */
   line-height: 50px; /* Vertically center text */

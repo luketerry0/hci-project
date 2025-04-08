@@ -21,7 +21,6 @@ export default class Particle {
             mass: this.upgrades[UPGRADES.HEAVY_BALL_MULTIPLIER]
         }
         this.body = Matter.Bodies.circle(x,y,r,this.ops);
-        console.log(upgrades)
         this.r = (r / this.upgrades[UPGRADES.SMALL_BALL_MULTIPLER]) + 6;
         this.letter = letter == " " ? '_' : letter; //'abcdefghijklmnopqrstuvwxyz'[this.get_random_number(26)]
         this.color = [this.get_random_number(255), this.get_random_number(255), this.get_random_number(255)]

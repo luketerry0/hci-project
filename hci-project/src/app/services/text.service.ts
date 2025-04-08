@@ -19,11 +19,19 @@ export class TextService {
   private letterSubject = new Subject<string>();
   letterTyped$ = this.letterSubject.asObservable();
   private string_length = 50;
+  private game_state_service : GameStateService;
+  private curr_index = 0;
 
 
-
-  constructor(){
+  constructor(gss: GameStateService){
     this.file_lines = ['loading...']
+    this.game_state_service = gss
+    this.game_state_service.upgrade$.subscribe((upgrade) => {
+      if (upgrade[UPGRADES.NEW_TEST] != this.curr_index){
+        this.curr_index = upgrade[UPGRADES.NEW_TEST];
+        this.loadText(this.curr_index);
+      }
+    })
   }
 
   loadText(index: number) {
