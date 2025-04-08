@@ -1,11 +1,2 @@
 <!-- counter.component.html -->
- <div class="tick-container">
-<div class="tick" #tickElement data-credits="false" >
-    <span data-layout="horizontal">
-      <span data-repeat="true" data-transform="arrive(5, .01) -> round -> split -> delay(rtl, 100, 150)">
-        <span data-view="flip"></span>
-      </span>
-    </span>
-  </div>
-  
-</div>
+<div class="counter">${{currBalance}}</div>
