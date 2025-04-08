@@ -67,6 +67,10 @@ export class GameStateService {
     return this.upgrades;
   }
 
+  resetTexts() {
+    this.upgrades[UPGRADES.NEW_TEST] = 0;
+  }
+
   getGameState(): GameState{
     return this.game_state;
   }

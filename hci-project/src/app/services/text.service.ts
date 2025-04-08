@@ -21,6 +21,7 @@ export class TextService {
   private string_length = 50;
   private game_state_service : GameStateService;
   private curr_index = 0;
+  private NUM_TEXTS = 2
 
 
   constructor(gss: GameStateService){
@@ -28,7 +29,12 @@ export class TextService {
     this.game_state_service = gss
     this.game_state_service.upgrade$.subscribe((upgrade) => {
       if (upgrade[UPGRADES.NEW_TEST] != this.curr_index){
-        this.curr_index = upgrade[UPGRADES.NEW_TEST];
+        if (upgrade[UPGRADES.NEW_TEST] >= this.NUM_TEXTS){
+          this.curr_index = 0
+          this.game_state_service.resetTexts();
+        }else{
+          this.curr_index = upgrade[UPGRADES.NEW_TEST];
+        }
         this.loadText(this.curr_index);
       }
     })
