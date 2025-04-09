@@ -1,0 +1,25 @@
+p {
+    width: 100%;
+    text-align: center;
+    z-index: 0;
+}
+.not-typed{
+    color: black;
+}
+.typed{
+    color: lightgray;
+}
+.blinking-cursor {
+    display: inline-block;
+    width: 1px;
+    height: 1.5em;
+    vertical-align: bottom;
+    background-color: black;
+    animation: blink 1s step-start infinite;
+  }  
+  
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }

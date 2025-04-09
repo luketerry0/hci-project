@@ -2,7 +2,8 @@ export enum UPGRADES {
     HEAVY_BALL_MULTIPLIER,
     INVERSE_BOUNCE_MULTIPLER,
     SMALL_BALL_MULTIPLER,
-    NEW_TEST
+    NEW_TEST,
+    AUTOTYPER
 }
 
 export type UpgradeObject = {

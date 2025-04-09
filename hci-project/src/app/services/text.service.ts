@@ -62,7 +62,7 @@ export class TextService {
   }
   
 
-  // handles a keypress: returns a boolean to denote whether the key was the correct character
+  // handles a keypress
   pressKeyEvent(event: KeyboardEvent) {
     const key = event.key;
     if (key == this.curr_char){
@@ -83,5 +83,9 @@ export class TextService {
       this.curr_char = this.curr_passage[0];
       this.currLineSubject.next(this.curr_passage.slice(0, this.string_length));
     }
+  }
+
+  autoTyperCharacter(char: string){
+    this.letterSubject.next(char);
   }
 }

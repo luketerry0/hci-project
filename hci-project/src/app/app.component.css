@@ -2,7 +2,7 @@ plinko{
     width:100vw;
     height: 100vh;
     top:0;
-    position: fixed;
+    position: absolute;
     z-index: -1;
 }
 
@@ -17,8 +17,13 @@ app-typing-stats{
     margin-left: 5%
 }
 
+app-autotyper{
+    text-align: left;
+}
+
 .flex-container {
     display: flex;
+    padding-bottom: 10%;
 }
 
 /* :host {

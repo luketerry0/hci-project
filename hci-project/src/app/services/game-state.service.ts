@@ -16,13 +16,16 @@ export class GameStateService {
     [UPGRADES.HEAVY_BALL_MULTIPLIER]: 500,
     [UPGRADES.INVERSE_BOUNCE_MULTIPLER]: 500,
     [UPGRADES.SMALL_BALL_MULTIPLER]: 500,
-    [UPGRADES.NEW_TEST]: 500
+    [UPGRADES.NEW_TEST]: 500,
+    [UPGRADES.AUTOTYPER]: 10000
+
   }
   upgrades = {
     [UPGRADES.HEAVY_BALL_MULTIPLIER]: 0,
     [UPGRADES.INVERSE_BOUNCE_MULTIPLER]: 4,
     [UPGRADES.SMALL_BALL_MULTIPLER]: 1,
-    [UPGRADES.NEW_TEST]: 0
+    [UPGRADES.NEW_TEST]: 0,
+    [UPGRADES.AUTOTYPER]: 0
   }
 
   game_state = {
@@ -46,6 +49,7 @@ export class GameStateService {
     this.balanceSubject.next(this.currBalance);
   }
   upgrade(curr_upgrade: UPGRADES) {
+    console.log(curr_upgrade);
     const cost = this.getUpgradeCost(curr_upgrade);
     // check if we can afford the upgrade
     if (this.currBalance >= cost) {
