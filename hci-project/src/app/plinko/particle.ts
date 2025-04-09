@@ -49,12 +49,12 @@ export default class Particle {
         return(x<-50 || x > s.width + 50 || y > s.height + 50);
     }
 
-    isInBucket(s: p5, buckets: Bucket[]): Boolean{
+    isInBucket(s: p5, buckets: Bucket[], mult: number): Boolean{
         for (var i = 0; i < buckets.length; i++){
             if ((Math.abs(this.body.position.x - buckets[i].x) < buckets[i].width) 
                 && (Math.abs(this.body.position.y - buckets[i].y) < buckets[i].height)){
                 // send to the observable in order to update the balance
-                this.gameStateService.score(buckets[i].value);
+                this.gameStateService.score(Math.round(buckets[i].value + mult*10 - 10));
                 return true
                 }
         }

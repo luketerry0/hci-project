@@ -128,13 +128,13 @@ export class PlinkoComponent {
 
         // draw the buckets
         for (var i = 0; i < this.buckets.length; i++) {
-          this.buckets[i].show(s);
+          this.buckets[i].show(s, this.upgrades[UPGRADES.BUCKET_VAL_MULTIPLIER]);
         }
 
         // draw the particles
         for (var i = 0; i < this.particles.length; i++) {
           this.particles[i].show(s);
-          if(this.particles[i].isInBucket(s, this.buckets)) {
+          if(this.particles[i].isInBucket(s, this.buckets, this.upgrades[UPGRADES.BUCKET_VAL_MULTIPLIER])) {
             this.World.remove(this.world, this.particles[i].body);
             this.particles.splice(i,1);
             i--;
