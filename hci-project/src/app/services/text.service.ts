@@ -22,6 +22,9 @@ export class TextService {
   private game_state_service : GameStateService;
   private curr_index = 0;
   private NUM_TEXTS = 2
+  private correctCharsTyped = 0;
+  private correctCharsTypedSubject = new Subject<number>()
+  correctChars$ = this.correctCharsTypedSubject.asObservable();
 
 
   constructor(gss: GameStateService){
@@ -59,9 +62,12 @@ export class TextService {
   }
   
 
+  // handles a keypress: returns a boolean to denote whether the key was the correct character
   pressKeyEvent(event: KeyboardEvent) {
     const key = event.key;
     if (key == this.curr_char){
+      this.correctCharsTyped = this.correctCharsTyped + 1;
+      this.correctCharsTypedSubject.next(this.correctCharsTyped);
       if(this.old_line.length > 15){
         this.old_line = this.old_line.slice(1);
       }
@@ -78,5 +84,4 @@ export class TextService {
       this.currLineSubject.next(this.curr_passage.slice(0, this.string_length));
     }
   }
-
 }

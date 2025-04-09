@@ -1,9 +1,28 @@
 plinko{
-    width:75%;
-    margin-left: 23%;
+    width:100vw;
+    height: 100vh;
+    top:0;
+    position: fixed;
+    z-index: -1;
 }
 
 app-upgrades{
     width: 25%;
     margin-right: 5%;
+    margin-left: 50%
 }
+
+app-typing-stats{
+    width: 25%;
+    margin-left: 5%
+}
+
+.flex-container {
+    display: flex;
+}
+
+/* :host {
+    display: block;
+    height: 100vh;
+    width: 100vw;
+} */

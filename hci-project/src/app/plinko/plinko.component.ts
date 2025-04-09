@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { Component, ViewChild, OnInit, ElementRef, OnDestroy, HostListener } from '@angular/core';
 import p5 from 'p5';
 import Peg from './peg';
 import Bucket from './bucket';
@@ -7,6 +7,7 @@ import Particle from './particle';
 import { GameStateService } from '../services/game-state.service';
 import { TextService } from '../services/text.service';
 import { GameState, UpgradeObject, UPGRADES } from '../types';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class PlinkoComponent {
   textService: TextService
   upgrades: UpgradeObject;
   config: GameState;
+  private text_service_subscription: Subscription | undefined;
 
   constructor(private gss: GameStateService, private ts: TextService){
     // create matter.js engine, world
@@ -41,6 +43,17 @@ export class PlinkoComponent {
     this.textService = ts;
     this.upgrades = this.gameStateService.getUpgrades();
     this.config = this.gameStateService.getGameState();
+
+    this.gameStateService.upgrade$.subscribe((upgrades) => {
+      this.upgrades = upgrades;
+    });
+  
+    this.gameStateService.gameState$.subscribe((new_game_state) => {
+      this.config = new_game_state;
+    });
+
+    // Load the initial text
+    this.textService.loadText(this.upgrades[UPGRADES.NEW_TEST]);
   }
 
 
@@ -55,56 +68,56 @@ export class PlinkoComponent {
     this.height = this.canvas.nativeElement.offsetHeight;
   }
 
-  ngOnInit() {
+  createParticle(x: number, y: number, letter: string) {
+    var p = new Particle(x,y,this.config.ball_radius, this.world, this.gameStateService, letter, this.upgrades);
+    this.particles.push(p);
+  }
 
-    this.gameStateService.upgrade$.subscribe((upgrades) => {
-      this.upgrades = upgrades;
-    });
-  
-    this.gameStateService.gameState$.subscribe((new_game_state) => {
-      this.config = new_game_state;
-    });
-  
-    // Load the initial text
-    this.textService.loadText(this.upgrades[UPGRADES.NEW_TEST]);
+  private draw_plinko_board(s: p5){
+    this.pegs = [];
+    this.buckets = [];
+    // draw the plinko board
+    const spacing_between_pegs = this.config.spacing_between_pegs;
+    const peg_radius = this.config.peg_radius;
+    for (let level = 0; level < this.rows; level++){
+      for (let i = 0; i <= level; i++){
+          // determine where the peg should be
+          const peg_x = s.width / 2 + i*spacing_between_pegs- level*spacing_between_pegs/2;
+          const peg_y = s.height / 4 + level*spacing_between_pegs;
+          
+          // keep track of the peg
+          var p = new Peg( peg_x, peg_y, peg_radius, this.world);
+          this.pegs.push(p);
+          
+          // if this is the last row, make a bucket under it
+          if (level == this.rows - 1 && i < level){
+            // calculate the value based on distance from the center peg
+            const value = s.map(
+              Math.abs(i - ((level-1)/2)), 0, ((level-1)/2), this.config.max_bucket, this.config.min_bucket
+            );
+
+            var b = new Bucket(
+              peg_x, peg_y + spacing_between_pegs/2, spacing_between_pegs, 30, value, 500);
+            this.buckets.push(b);
+          }
+      }
+    }
+  }
+
+  ngOnInit() {
+    this.text_service_subscription = this.textService.letterTyped$.subscribe((letter) => {
+      this.createParticle(this.width / 2 + (Math.random()*10 - 5), (this.height/4) - 20, letter);
+    })
 
     const sketch = (s: p5) => {
-      this.textService.letterTyped$.subscribe((letter) => {
-        this.createParticle(s.width / 2 + (Math.random()*10 - 5), (s.height/10) + 10, letter);
-      })
 
       s.setup = () => {
         // create corectly sized canvas
         s.createCanvas(this.width, this.height).parent('canvas-container');
 
-        // draw the plinko board
-        const spacing_between_pegs = this.config.spacing_between_pegs;
-        const peg_radius = this.config.peg_radius;
-        for (let level = 0; level < this.rows; level++){
-          for (let i = 0; i <= level; i++){
-              // determine where the peg should be
-              const peg_x = s.width / 2 + i*spacing_between_pegs- level*spacing_between_pegs/2;
-              const peg_y = s.height / 10 + level*spacing_between_pegs;
-              
-              // keep track of the peg
-              var p = new Peg( peg_x, peg_y, peg_radius, this.world);
-              this.pegs.push(p);
-              
-              // if this is the last row, make a bucket under it
-              if (level == this.rows - 1 && i < level){
-                // calculate the value based on distance from the center peg
-                const value = s.map(
-                  Math.abs(i - ((level-1)/2)), 0, ((level-1)/2), this.config.max_bucket, this.config.min_bucket
-                );
-
-                var b = new Bucket(
-                  peg_x, peg_y + spacing_between_pegs/2, spacing_between_pegs, 30, value, 500);
-                this.buckets.push(b);
-              }
-          }
+        // draw board, calculate peg positions, buckets
+        this.draw_plinko_board(s);
         }
-
-      };
   
       s.draw = () => {
         // Clear the background
@@ -139,19 +152,19 @@ export class PlinkoComponent {
       //   // add a particle
       //   // this.createParticle(s.mouseX, s.mouseY);
       // }
-
-      s.keyPressed = () => {
-        // Draw one frame
-        s.redraw();
-      }
     }
   
     this.p5Canvas = new p5(sketch);
   }
-  createParticle(x: number, y: number, letter: string) {
-    console.log(this.upgrades);
-    var p = new Particle(x,y,this.config.ball_radius, this.world, this.gameStateService, letter, this.upgrades);
-    this.particles.push(p);
+
+  @HostListener('window:resize', ['$event'])
+  sizeChange(event: any) {
+    // if the size of the window changes, recalculate the p5 board
+    this.width = this.canvas.nativeElement.offsetWidth;
+    this.height = this.canvas.nativeElement.offsetHeight;
+    this.text_service_subscription?.unsubscribe();
+    this.ngOnInit();
   }
+
 
 }
