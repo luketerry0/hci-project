@@ -120,6 +120,9 @@ export class PlinkoComponent {
   }
 
   private draw_plinko_board(s: p5){
+    this.pegs.forEach((peg) => {
+      this.World.remove(this.world, peg.body);
+    });
     this.pegs = [];
     this.buckets = [];
     // draw the plinko board
@@ -128,8 +131,8 @@ export class PlinkoComponent {
     for (let level = 0; level < this.rows; level++){
       for (let i = 0; i <= level; i++){
           // determine where the peg should be
-          const peg_x = s.width / 2 + i*spacing_between_pegs- level*spacing_between_pegs/2;
-          const peg_y = s.height / 4 + level*spacing_between_pegs;
+          const peg_x = this.width / 2 + i*spacing_between_pegs- level*spacing_between_pegs/2;
+          const peg_y = this.height / 4 + level*spacing_between_pegs;
           
           // keep track of the peg
           var p = new Peg( peg_x, peg_y, peg_radius, this.world);
@@ -164,6 +167,7 @@ export class PlinkoComponent {
     this.width = this.canvas.nativeElement.offsetWidth;
     this.height = this.canvas.nativeElement.offsetHeight;
     this.p5Canvas.setup();
+    console.log(this.pegs);
   }
 
 
