@@ -34,6 +34,7 @@ export class PlinkoComponent {
   upgrades: UpgradeObject;
   config: GameState;
   private text_service_subscription: Subscription | undefined;
+  sketch: (s: p5) => void;
 
   constructor(private gss: GameStateService, private ts: TextService){
     // create matter.js engine, world
@@ -54,6 +55,51 @@ export class PlinkoComponent {
 
     // Load the initial text
     this.textService.loadText(this.upgrades[UPGRADES.NEW_TEST]);
+
+    this.sketch = (s: p5) => {
+
+      s.setup = () => {
+        // create corectly sized canvas
+        s.createCanvas(this.width, this.height).parent('canvas-container');
+
+        // draw board, calculate peg positions, buckets
+        this.draw_plinko_board(s);
+        }
+  
+      s.draw = () => {
+        // Clear the background
+        s.background('white');
+
+        // update the engine
+        this.Engine.update(this.engine);
+
+        // draw the buckets
+        for (var i = 0; i < this.buckets.length; i++) {
+          this.buckets[i].show(s, this.upgrades[UPGRADES.BUCKET_VAL_MULTIPLIER]);
+        }
+
+        // draw the particles
+        for (var i = 0; i < this.particles.length; i++) {
+          this.particles[i].show(s);
+          if(this.particles[i].isInBucket(s, this.buckets, this.upgrades[UPGRADES.BUCKET_VAL_MULTIPLIER])) {
+            this.World.remove(this.world, this.particles[i].body);
+            this.particles.splice(i,1);
+            i--;
+          }
+        }
+
+        // draw the pegs
+        for (var i = 0; i < this.pegs.length; i++) {
+          this.pegs[i].show(s);
+        }
+      };
+
+      // code to drop a random letter when mouse is pressed
+      // s.mousePressed = () => {
+      //   // add a particle
+      //   // this.createParticle(s.mouseX, s.mouseY);
+      // }
+    }
   }
 
 
@@ -108,53 +154,8 @@ export class PlinkoComponent {
     this.text_service_subscription = this.textService.letterTyped$.subscribe((letter) => {
       this.createParticle(this.width / 2 + (Math.random()*10 - 5), (this.height/4) - 20, letter);
     })
-
-    const sketch = (s: p5) => {
-
-      s.setup = () => {
-        // create corectly sized canvas
-        s.createCanvas(this.width, this.height).parent('canvas-container');
-
-        // draw board, calculate peg positions, buckets
-        this.draw_plinko_board(s);
-        }
   
-      s.draw = () => {
-        // Clear the background
-        s.background('white');
-
-        // update the engine
-        this.Engine.update(this.engine);
-
-        // draw the buckets
-        for (var i = 0; i < this.buckets.length; i++) {
-          this.buckets[i].show(s, this.upgrades[UPGRADES.BUCKET_VAL_MULTIPLIER]);
-        }
-
-        // draw the particles
-        for (var i = 0; i < this.particles.length; i++) {
-          this.particles[i].show(s);
-          if(this.particles[i].isInBucket(s, this.buckets, this.upgrades[UPGRADES.BUCKET_VAL_MULTIPLIER])) {
-            this.World.remove(this.world, this.particles[i].body);
-            this.particles.splice(i,1);
-            i--;
-          }
-        }
-
-        // draw the pegs
-        for (var i = 0; i < this.pegs.length; i++) {
-          this.pegs[i].show(s);
-        }
-      };
-
-      // code to drop a random letter when mouse is pressed
-      // s.mousePressed = () => {
-      //   // add a particle
-      //   // this.createParticle(s.mouseX, s.mouseY);
-      // }
-    }
-  
-    this.p5Canvas = new p5(sketch);
+    this.p5Canvas = new p5(this.sketch);
   }
 
   @HostListener('window:resize', ['$event'])
@@ -162,8 +163,7 @@ export class PlinkoComponent {
     // if the size of the window changes, recalculate the p5 board
     this.width = this.canvas.nativeElement.offsetWidth;
     this.height = this.canvas.nativeElement.offsetHeight;
-    this.text_service_subscription?.unsubscribe();
-    this.ngOnInit();
+    this.p5Canvas.setup();
   }
 
 
