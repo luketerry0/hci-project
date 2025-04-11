@@ -1,25 +1,49 @@
-p {
-    width: 100%;
-    text-align: center;
-    z-index: 0;
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+
+.typer-container {
+  position: fixed;
+  top: 10%;              
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 2em;            
+  overflow: hidden;
+  pointer-events: none;   
+  z-index: 1000;
 }
-.not-typed{
-    color: black;
+
+.text-line {
+  position: absolute;
+  white-space: nowrap;
+  font-family: 'Fira Code', monospace;
+  font-size: 1.5rem;
+  transition: transform 0.1s ease-out;
 }
-.typed{
-    color: lightgray;
+
+.fixed-cursor {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;          
+  background-color: var(--color-cursor);
 }
+
 .blinking-cursor {
-    display: inline-block;
-    width: 1px;
-    height: 1.5em;
-    vertical-align: bottom;
-    background-color: black;
-    animation: blink 1s step-start infinite;
-  }  
-  
-  @keyframes blink {
-    50% {
-      opacity: 0;
-    }
-  }
+  animation: blink 0.8s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  0%   { opacity: 1; }
+  50%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.typed {
+  color: var(--color-typed);  
+}
+
+.not-typed {
+  color: var(--color-untyped);  
+}

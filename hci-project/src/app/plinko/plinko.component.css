@@ -1,22 +1,21 @@
-
-#canvas-container{
+#canvas-container {
     height: 100%;
     width: 100%;
-}
-
-/* mobile screens */
-@media screen and (max-width: 800px) {
-    #canvas-container{
-        width: 100%;
-        height: 66vh;
+    background-color: transparent; 
+  }
+  
+  /* Mobile screens */
+  @media screen and (max-width: 800px) {
+    #canvas-container {
+      width: 100%;
+      height: 66vh;
     }
   }
-
-/* desktop screens */
-@media screen and (min-width: 800px) {
-
-    #canvas-container{
-        width: 100%;
+  
+  /* Desktop screens */
+  @media screen and (min-width: 800px) {
+    #canvas-container {
+      width: 100%;
     }
-    
-}
+  }
+  
