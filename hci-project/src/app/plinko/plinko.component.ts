@@ -38,7 +38,7 @@ export class PlinkoComponent {
 
   constructor(private gss: GameStateService, private ts: TextService){
     // create matter.js engine, world
-    this.engine = this.Engine.create();
+    this.engine = this.Engine.create({velocityIterations: 1, positionIterations: 1, constraintIterations: 1});
     this.world = this.engine.world;
     this.gameStateService = gss;
     this.textService = ts;
@@ -47,6 +47,7 @@ export class PlinkoComponent {
 
     this.gameStateService.upgrade$.subscribe((upgrades) => {
       this.upgrades = upgrades;
+      this.p5Canvas.setup();
     });
   
     this.gameStateService.gameState$.subscribe((new_game_state) => {
@@ -66,7 +67,7 @@ export class PlinkoComponent {
         this.draw_plinko_board(s);
         }
   
-      s.draw = () => {
+      s.draw = async () => {
         // Clear the background
         s.background('white');
 
@@ -79,21 +80,28 @@ export class PlinkoComponent {
         }
 
         // draw the particles
-        for (var i = 0; i < this.particles.length; i++) {
+        const updateParticle = async (i: number, s: p5): Promise<boolean> => {
           this.particles[i].show(s);
-          if(this.particles[i].isInBucket(s, this.buckets, this.upgrades[UPGRADES.BUCKET_VAL_MULTIPLIER])) {
-            this.World.remove(this.world, this.particles[i].body);
-            this.particles.splice(i,1);
-            i--;
+          if(
+            this.particles[i].isInBucket(s, this.buckets, this.upgrades[UPGRADES.BUCKET_VAL_MULTIPLIER]) ||
+            this.particles[i].isOffscreen(s)) {
+                this.World.remove(this.world, this.particles[i].body);
+                this.particles.splice(i,1);
           }
+        return true;
+      }
+      let parts = []
+        for (var i = 0; i < this.particles.length; i++) {
+          parts.push(updateParticle(i, s));
         }
 
-        // draw the pegs
-        for (var i = 0; i < this.pegs.length; i++) {
-          this.pegs[i].show(s);
-        }
+      // draw the pegs
+      for (var i = 0; i < this.pegs.length; i++) {
+        this.pegs[i].show(s);
+      }
+      await Promise.all(parts);
+      console.log(this.particles.length)
       };
-
       // code to drop a random letter when mouse is pressed
       // s.mousePressed = () => {
       //   // add a particle
@@ -128,6 +136,8 @@ export class PlinkoComponent {
     // draw the plinko board
     const spacing_between_pegs = this.config.spacing_between_pegs;
     const peg_radius = this.config.peg_radius;
+    let pegs_drawn = 0
+    const removed_pegs = this.upgrades[UPGRADES.REMOVE_PEG];
     for (let level = 0; level < this.rows; level++){
       for (let i = 0; i <= level; i++){
           // determine where the peg should be
@@ -135,8 +145,12 @@ export class PlinkoComponent {
           const peg_y = this.height / 4 + level*spacing_between_pegs;
           
           // keep track of the peg
+          if (pegs_drawn >= removed_pegs){
           var p = new Peg( peg_x, peg_y, peg_radius, this.world);
           this.pegs.push(p);
+        }
+        pegs_drawn = pegs_drawn + 1
+
           
           // if this is the last row, make a bucket under it
           if (level == this.rows - 1 && i < level){

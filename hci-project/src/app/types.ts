@@ -4,7 +4,9 @@ export enum UPGRADES {
     SMALL_BALL_MULTIPLER,
     NEW_TEST,
     AUTOTYPER,
-    BUCKET_VAL_MULTIPLIER
+    BUCKET_VAL_MULTIPLIER,
+    AUTOTYPER_SPEED,
+    REMOVE_PEG
 }
 
 export type UpgradeObject = {

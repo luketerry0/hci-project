@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { TextService } from '../services/text.service';
+import { GameStateService } from '../services/game-state.service';
+import { UPGRADES } from '../types';
 
 @Component({
   selector: 'app-autotyper',
@@ -16,6 +18,11 @@ export class AutotyperComponent {
   full_line = "";
   new_line = "";
   text_service: TextService
+  intervalId;
+  game_state_service: GameStateService;
+  curr_speed_factor = 1;
+  STARTING_INTERVAL = 1000; //ms
+  INTERVAL_OFFSET= 400; //ms
 
   loadText(index: number) {
     const filePath = `assets/texts/auto${index}.txt`;
@@ -45,16 +52,27 @@ export class AutotyperComponent {
     this.new_line = this.full_line.slice(this.idx_in_line);
   }
 
-  constructor(ts: TextService){
-    // bind text service
+  constructor(ts: TextService, gss: GameStateService){
+    // bind services
     this.text_service = ts;
+    this.game_state_service = gss;
+
+    this.game_state_service.upgrade$.subscribe((upgrades) => {
+      if (upgrades[UPGRADES.AUTOTYPER_SPEED] != this.curr_speed_factor){
+        this.curr_speed_factor = upgrades[UPGRADES.AUTOTYPER_SPEED];
+        clearInterval(this.intervalId);
+        this.intervalId = setInterval(() => {
+          this.advance();
+        }, this.STARTING_INTERVAL/this.curr_speed_factor + this.INTERVAL_OFFSET + Math.random()*500-250);
+      }
+    })
 
     // load in text
     this.loadText(0);
 
     // advance every second
-    setInterval(() => {
+    this.intervalId = setInterval(() => {
       this.advance();
-    }, 1000); 
+    }, this.STARTING_INTERVAL); 
   }
 }
