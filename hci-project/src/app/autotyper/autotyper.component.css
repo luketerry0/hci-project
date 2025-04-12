@@ -4,10 +4,10 @@ p {
     z-index: 0;
 }
 .not-typed{
-    color: black;
+    color: var(--color-text);
 }
 .typed{
-    color: lightgray;
+    color: var(--color-typed);
 }
 .blinking-cursor {
     display: inline-block;

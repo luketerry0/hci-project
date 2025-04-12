@@ -19,12 +19,12 @@ export default class Bucket {
         this.max_value = max_value;
     }
 
-    show(s: p5, mult: number){
+    show(s: p5, mult: number, isDark: boolean){
 
         s.fill([66, 135, 245, 10*s.map(this.value, 0, this.max_value, 0, 255)]);
         s.noStroke();
         s.rect(this.x, this.y, this.width, this.height);
-        s.fill(0);
+        s.fill(isDark ? 255 : 0);
         s.textAlign(s.CENTER, s.CENTER);
         s.text(Math.round(this.value)+(this.value+mult*10 - 10), this.x+(this.width/2), this.y+(this.height/2));
     }

@@ -17,7 +17,7 @@ export class GameStateService {
     [UPGRADES.INVERSE_BOUNCE_MULTIPLER]: 500,
     [UPGRADES.SMALL_BALL_MULTIPLER]: 500,
     [UPGRADES.NEW_TEST]: 500,
-    [UPGRADES.AUTOTYPER]: 500,
+    [UPGRADES.AUTOTYPER]: 0,
     [UPGRADES.BUCKET_VAL_MULTIPLIER]: 500,
     [UPGRADES.AUTOTYPER_SPEED]: 5000,
     [UPGRADES.REMOVE_PEG]: 500000
@@ -48,11 +48,15 @@ export class GameStateService {
   private upgradeSubject = new Subject<UpgradeObject>();
   upgrade$ = this.upgradeSubject.asObservable();
 
+  private darkModeSubject = new Subject<boolean>();
+  darkMode$ = this.darkModeSubject.asObservable();
+
 
   score(points: number) {
     this.currBalance = this.currBalance + points;
     this.balanceSubject.next(this.currBalance);
   }
+
   upgrade(curr_upgrade: UPGRADES) {
     console.log(curr_upgrade);
     const cost = this.getUpgradeCost(curr_upgrade);
@@ -82,6 +86,10 @@ export class GameStateService {
 
   getGameState(): GameState{
     return this.game_state;
+  }
+
+  setDarkMode(dark: boolean){
+    this.darkModeSubject.next(dark);
   }
   
 }

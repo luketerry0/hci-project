@@ -35,6 +35,9 @@ export class PlinkoComponent {
   config: GameState;
   private text_service_subscription: Subscription | undefined;
   sketch: (s: p5) => void;
+  colors = {
+    background: 'white'
+  }
 
   constructor(private gss: GameStateService, private ts: TextService){
     // create matter.js engine, world
@@ -54,6 +57,20 @@ export class PlinkoComponent {
       this.config = new_game_state;
     });
 
+    this.gameStateService.darkMode$.subscribe((isDark) => {
+      console.log(isDark)
+      if (isDark){
+        this.colors = {
+          background: '#1e1e1e'
+        }
+      }else{
+        this.colors = {
+          background: 'white'
+        }
+      }
+      this.p5Canvas.setup();
+    })
+
     // Load the initial text
     this.textService.loadText(this.upgrades[UPGRADES.NEW_TEST]);
 
@@ -69,19 +86,19 @@ export class PlinkoComponent {
   
       s.draw = async () => {
         // Clear the background
-        s.background('white');
+        s.background(this.colors.background);
 
         // update the engine
         this.Engine.update(this.engine);
 
         // draw the buckets
         for (var i = 0; i < this.buckets.length; i++) {
-          this.buckets[i].show(s, this.upgrades[UPGRADES.BUCKET_VAL_MULTIPLIER]);
+          this.buckets[i].show(s, this.upgrades[UPGRADES.BUCKET_VAL_MULTIPLIER], this.colors.background != 'white');
         }
 
         // draw the particles
         const updateParticle = async (i: number, s: p5): Promise<boolean> => {
-          this.particles[i].show(s);
+          this.particles[i].show(s, this.colors.background);
           if(
             this.particles[i].isInBucket(s, this.buckets, this.upgrades[UPGRADES.BUCKET_VAL_MULTIPLIER]) ||
             this.particles[i].isOffscreen(s)) {
@@ -97,7 +114,7 @@ export class PlinkoComponent {
 
       // draw the pegs
       for (var i = 0; i < this.pegs.length; i++) {
-        this.pegs[i].show(s);
+        this.pegs[i].show(s, this.colors.background);
       }
       await Promise.all(parts);
       console.log(this.particles.length)

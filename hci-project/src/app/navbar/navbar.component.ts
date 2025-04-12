@@ -44,6 +44,7 @@ export class NavBarComponent {
     } else {
       document.body.classList.remove('dark-mode');
     }
+    this.gameStateService.setDarkMode(this.darkMode);
   }
 
   buyUpgrade(upgrade: UPGRADES) {

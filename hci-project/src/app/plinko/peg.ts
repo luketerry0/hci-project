@@ -18,9 +18,9 @@ export default class Peg{
         Matter.World.add(world, this.body);
     }
 
-    show(s: p5){
+    show(s: p5, background: string){
         s.fill(0);
-        s.stroke(255);
+        s.stroke(background);
         var pos = this.body.position;
         s.push();
         s.translate(pos.x,pos.y);

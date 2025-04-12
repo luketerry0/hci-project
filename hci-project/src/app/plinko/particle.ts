@@ -28,15 +28,14 @@ export default class Particle {
         Matter.World.add(world, this.body);
     }
 
-    show(s: p5){
+    show(s: p5, background: string){
         s.stroke(0);
-        s.fill(255);
+        s.fill(background);
         var pos = this.body.position;
         s.push();
         s.translate(pos.x,pos.y);
         s.circle(0,0,this.r*2);
         s.fill(this.color);
-        s.stroke(255);
         s.rotate(this.body.angle);
         s.text(this.letter, 0, 0);
 
