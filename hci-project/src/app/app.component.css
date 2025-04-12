@@ -18,6 +18,10 @@ plinko {
     width: 25%;
     margin-left: 5%;
   }
+
+  .left-column{
+    width: 30%;
+  }
   
   .flex-container {
     display: flex;

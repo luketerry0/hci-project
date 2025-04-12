@@ -3,11 +3,13 @@
 <div class="typer-container">
   <app-typer></app-typer>
 </div>
-<p class="flex-container">
+<div class="flex-container">
+    <div class="left-column">
   <app-typing-stats></app-typing-stats>
-  <plinko></plinko>
-  <app-upgrades></app-upgrades>
-</p>
-@for (typer of n_autotypers; track typer) {
+  @for (typer of n_autotypers; track typer) {
     <app-autotyper></app-autotyper> 
 }
+    </div>
+  <plinko></plinko>
+  <app-upgrades></app-upgrades>
+</div>
