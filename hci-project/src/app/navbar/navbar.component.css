@@ -1,108 +1,57 @@
-/* Parent div style */
+/* Navbar container style */
 .parent-container {
   position: relative;
   top: 0;
   left: 0;
-  padding: 0;
   width: 100%;
   height: 50px;
-  background-color: lightblue; /* Example background color */
+  background-color: var(--color-navbar);
+  transition: background-color var(--transition-speed);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
-.menu-button{
-  background-color: lightblue;
-  color: black;
+/* Menu button style */
+.menu-button {
+  background-color: var(--color-navbar);
+  color: var(--color-navbar-text);
   padding: 10px 20px;
   border: none;
   cursor: pointer;
   font-size: 16px;
   position: absolute;
-  left: 0; /* Align to the right */
-  top: 50%; /* Center vertically within the parent */
+  left: 0;
+  top: 50%;
   transform: translateY(-50%);
   z-index: 6;
   height: 100%;
+  transition: background-color var(--transition-speed);
 }
 
 .menu-button:hover {
-  background-color: rgb(108, 196, 225);
+  background-color: var(--color-hover);
 }
 
-/* Button style */
-.dropdown-button {
-  background-color: lightblue;
-  color: black;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  position: absolute;
-  right: 0; /* Align to the right */
-  top: 50%; /* Center vertically within the parent */
-  transform: translateY(-50%);
-  z-index: 2;
-  height: 100%;
-}
-
-.dropdown-button:hover {
-  background-color: rgb(108, 196, 225);
-}
-
-/* Dropdown menu style */
-.dropdown-menu {
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 120px; /* Set a smaller width for the dropdown */
-  max-width: 200px; /* Max width to prevent it from getting too wide */
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  right: 0; /* Align to the right of the button */
-  top: 100%; /* Position it below the button */
-  display: none; /* Hide by default */
-}
-
-/* Show dropdown when the 'show' class is added */
-.dropdown-menu.show {
-  display: block;
-}
-
-/* Dropdown options style */
-.dropdown-option {
-  padding: 8px 12px; /* Reduce padding to make the options smaller */
-  font-size: 14px; /* Make the font size smaller */
-  background-color: #f1f1f1;
-  border: none;
-  width: 100%; /* Ensure the options take up the full width of the dropdown */
-  text-align: left;
-  cursor: pointer;
-}
-
-.dropdown-option:hover {
-  background-color: #ddd;
-}
-
-/* Sidebar Container */
+/* Sidebar styles */
 .sidebar {
-  position: fixed;  /* Ensure the sidebar is fixed in the viewport */
-  left: -250px;  /* Start off-screen */
+  position: fixed;
+  left: -250px;
   top: 0;
   height: 100%;
   width: 250px;
-  background-color: #333;
-  color: white;
-  padding-top: 60px;  /* Space for the close button */
-  transition: 0.3s ease;
-  z-index: 1000;  /* Ensure it's above other content */
+  background-color: var(--color-sidebar-bg);
+  color: var(--color-sidebar-text);
+  padding-top: 60px;
+  transition: left var(--transition-speed) ease;
+  z-index: 1000;
 }
 
 .sidebar-open {
-  left: 0;  /* Slide in the sidebar */
+  left: 0;
 }
 
-/* Sidebar Items */
 .sidebar ul {
   list-style-type: none;
-  padding: 0; 
+  padding: 0;
 }
 
 .sidebar ul li {
@@ -111,13 +60,13 @@
 
 .sidebar ul li a {
   text-decoration: none;
-  color: white;
+  color: var(--color-sidebar-text);
   display: block;
-  padding: 15px 16px; /*Increase padding to make buttons taller*/
-  font-size: 16px; /* Optional: increase font size */
-  height: 50px; /* Explicitly set height */
-  line-height: 50px; /* Vertically center text */
-  transition: background-color 0.3s ease;
+  padding: 15px 16px;
+  font-size: 16px;
+  height: 50px;
+  line-height: 50px;
+  transition: background-color var(--transition-speed);
   text-align: center;
 }
 
@@ -125,26 +74,22 @@
   background-color: #575757;
 }
 
-/* Button to open sidebar */
-.sidebar-toggle-btn {
-  position: fixed;  /* Fixed to the viewport */
-  top: 20px;
-  left: 20px;
-  font-size: 24px;
-  background-color: #4CAF50;
-  color: white;
+.dark-mode-toggle {
+  background-color: var(--color-sidebar-bg);
+  color: var(--color-sidebar-text);
   padding: 10px 20px;
   border: none;
   cursor: pointer;
-  z-index: 999;  /* Ensure the button stays above content */
+  font-size: 16px;
+  width: 100%;
+  transition: background-color var(--transition-speed);
+  margin-top: 20px;
 }
 
-.sidebar-toggle-btn:hover {
-  background-color: #45a049;
+.dark-mode-toggle:hover {
+  background-color: var(--color-hover);
 }
 
-
-/* Close Button in Sidebar */
 .close-btn {
   position: absolute;
   top: 10px;
@@ -155,6 +100,7 @@
   font-size: 18px;
   padding: 5px 10px;
   cursor: pointer;
+  transition: background-color var(--transition-speed);
 }
 
 .close-btn:hover {

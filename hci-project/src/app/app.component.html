@@ -1,10 +1,12 @@
 <navbar></navbar>
 <counter></counter>
-<app-typer></app-typer>
+<div class="typer-container">
+  <app-typer></app-typer>
+</div>
 <p class="flex-container">
-    <app-typing-stats></app-typing-stats>
-    <plinko></plinko>
-    <app-upgrades></app-upgrades>
+  <app-typing-stats></app-typing-stats>
+  <plinko></plinko>
+  <app-upgrades></app-upgrades>
 </p>
 @for (typer of n_autotypers; track typer) {
     <app-autotyper></app-autotyper> 

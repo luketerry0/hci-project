@@ -1,5 +1,5 @@
-import { Component} from '@angular/core';
-import { CommonModule } from '@angular/common';  // Import CommonModule
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { UPGRADES } from '../types';
 import { GameStateService } from '../services/game-state.service';
 
@@ -8,30 +8,45 @@ import { GameStateService } from '../services/game-state.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css']
 })
 export class NavBarComponent {
   gameStateService: GameStateService;
   upgrades = UPGRADES;
-  constructor(gss: GameStateService){
+  
+  isDropdownOpen = false;
+  isSidebarOpen = false;
+  darkMode = false; // For tracking dark mode
+
+  constructor(gss: GameStateService) {
     this.gameStateService = gss;
   }
 
-  isDropdownOpen = false;
-  isSidebarOpen = false;
-
-  // Toggle the dropdown visibility
   toggleDropdown(event: Event) {
-    event.stopPropagation(); // Prevent click event from propagating to other elements
+    event.stopPropagation();
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
   toggleSidebar(event: Event) {
+    // Prevent toggling the sidebar when the spacebar is pressed.
+    if (event instanceof KeyboardEvent && event.key === ' ') {
+      return;
+    }
     event.stopPropagation();
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
-  buyUpgrade(upgrade: UPGRADES){
+  toggleDarkMode(event: Event) {
+    event.stopPropagation();
+    this.darkMode = !this.darkMode;
+    if (this.darkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }
+
+  buyUpgrade(upgrade: UPGRADES) {
     this.gameStateService.upgrade(upgrade);
   }
 }

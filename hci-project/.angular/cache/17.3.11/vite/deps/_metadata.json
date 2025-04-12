@@ -1,55 +1,49 @@
 {
-  "hash": "1a8e8bf1",
-  "configHash": "47625b86",
-  "lockfileHash": "a70f95af",
-  "browserHash": "8abb6345",
+  "hash": "4b30c6d5",
+  "configHash": "5becf111",
+  "lockfileHash": "016e5fe6",
+  "browserHash": "77062ee9",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "fc23cc0f",
+      "fileHash": "53bbdbad",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "62f96996",
+      "fileHash": "4b43044b",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "c2330e18",
+      "fileHash": "a304195b",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "041cb235",
-      "needsInterop": false
-    },
-    "@pqina/flip": {
-      "src": "../../../../../node_modules/@pqina/flip/dist/flip.module.js",
-      "file": "@pqina_flip.js",
-      "fileHash": "746abcdd",
+      "fileHash": "82cac498",
       "needsInterop": false
     },
     "matter-js": {
       "src": "../../../../../node_modules/matter-js/build/matter.js",
       "file": "matter-js.js",
-      "fileHash": "11cae197",
+      "fileHash": "976f2266",
       "needsInterop": true
     },
     "p5": {
       "src": "../../../../../node_modules/p5/lib/p5.min.js",
       "file": "p5.js",
-      "fileHash": "c192f696",
+      "fileHash": "e84b085e",
       "needsInterop": true
     },
     "rxjs": {
       "src": "../../../../../node_modules/rxjs/dist/esm5/index.js",
       "file": "rxjs.js",
-      "fileHash": "46cafdc8",
+      "fileHash": "7881ea9a",
       "needsInterop": false
     }
   },

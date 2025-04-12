@@ -1,30 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
 import { TextService } from '../services/text.service';
 
 @Component({
   selector: 'app-typer',
   standalone: true,
-  imports: [],
   templateUrl: './typer.component.html',
-  styleUrl: './typer.component.css',
-  host: {'(document:keydown)': 'handleKeyboardEvents($event)'}
+  styleUrls: ['./typer.component.css'],
+  host: { '(document:keydown)': 'handleKeyboardEvents($event)' }
 })
-export class TyperComponent {
-  textService: TextService;
-  curr_line: string = "";
+export class TyperComponent implements AfterViewChecked {
   old_line: string = "";
+  curr_line: string = "";
+  public textLeft: string = '50%';
 
-  constructor(textService: TextService){
-    this.textService = textService;
-    this.textService.currLine$.subscribe((line) => {
-      this.curr_line = line;
-    });
+  @ViewChild('typedSpan') typedSpan!: ElementRef;
+
+  constructor(private textService: TextService) {
     this.textService.oldLine$.subscribe((typed) => {
       this.old_line = typed;
     });
+    this.textService.currLine$.subscribe((line) => {
+      this.curr_line = line;
+    });
   }
 
-  handleKeyboardEvents(event: KeyboardEvent){
+  handleKeyboardEvents(event: KeyboardEvent) {
     this.textService.pressKeyEvent(event);
+  }
+
+  ngAfterViewChecked() {
+    this.updateTextPosition();
+  }
+
+  updateTextPosition() {
+    if (this.typedSpan && this.typedSpan.nativeElement) {
+      const typedWidth = this.typedSpan.nativeElement.offsetWidth;
+      this.textLeft = `calc(50% - ${typedWidth}px)`;
+    }
   }
 }

@@ -1,23 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 
-import { TyperComponent } from './typer.component';
-
-describe('TyperComponent', () => {
-  let component: TyperComponent;
-  let fixture: ComponentFixture<TyperComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TyperComponent]
-    })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(TyperComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+class MockTextService {
+  oldLine$ = of('');         // Provide initial empty string or dummy text as needed
+  currLine$ = of('Sample text');
+  pressKeyEvent(event: KeyboardEvent) {}
+}

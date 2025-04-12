@@ -1,3 +1,8 @@
-<p>
-    <span class="typed">{{old_line}}</span><span class="blinking-cursor"></span><span class="not-typed">{{ curr_line }}</span>
-</p>
+<div class="typer-container">
+    <div class="text-line" [style.left]="textLeft">
+      <span #typedSpan class="typed">{{ old_line }}</span>
+      <span class="not-typed">{{ curr_line }}</span>
+    </div>
+    <div class="fixed-cursor blinking-cursor"></div>
+  </div>
+  

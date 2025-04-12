@@ -1,36 +1,41 @@
-plinko{
-    width:100vw;
-    height: 90vh;
-    top:0;
-    position: absolute;
+/* Plinko board stays fixed in the background */
+plinko {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
     z-index: -1;
-}
-
-app-upgrades{
+    background-color: transparent; 
+  }
+  
+  app-upgrades {
     width: 25%;
     height: 90vh;
     margin-right: 5%;
-    margin-left: 50%
-}
-
-app-typing-stats{
+    margin-left: 50%;
+  }
+  
+  app-typing-stats {
     width: 25%;
-    height: 90vh;
-    margin-left: 5%
-}
-
-app-autotyper{
-    text-align: left;
-}
-
-.flex-container {
+    margin-left: 5%;
+  }
+  
+  .flex-container {
     display: flex;
-    padding-bottom: 20px;
-    height: 60vh;
-}
-
-/* :host {
-    display: block;
-    height: 100vh;
-    width: 100vw;
-} */
+  }
+  
+  .typer-container {
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 1000;
+    pointer-events: none;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .typer-container {
+      top: 10%;
+    }
+  }
+  

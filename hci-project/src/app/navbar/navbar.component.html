@@ -1,15 +1,14 @@
 <div class="parent-container">
-
   <button class="menu-button" (click)="toggleSidebar($event)">Menu</button>
-
 </div>
 
 <div [ngClass]="{'sidebar-open': isSidebarOpen}" class="sidebar">
   <button class="close-btn" (click)="toggleSidebar($event)">X</button>
   <ul>
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Settings</a></li>
-    <li><a href="#">Profile</a></li>
-    <li><a href="#">Buy Us a Coffee!</a></li>
+    <li><button class="dark-mode-toggle" href="#">Home</button></li>
+    <li><button class="dark-mode-toggle" href="#">Settings</button></li>
+    <li><button class="dark-mode-toggle" href="#">Profile</button></li>
+    <li><button class="dark-mode-toggle" href="#">Buy Us a Coffee!</button></li>
+    <li><button class="dark-mode-toggle" (click)="toggleDarkMode($event)">Toggle Dark Mode</button></li>
   </ul>
 </div>
