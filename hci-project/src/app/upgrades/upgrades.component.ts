@@ -18,13 +18,21 @@ export class UpgradesComponent {
       this.gameStateService = gss;
     }
   buyUpgrade(upgrade: UPGRADES){
-    this.gameStateService.upgrade(upgrade);
-
-    // const target = event.target as HTMLElement;
-    // target.blur();
+    if(this.gameStateService.upgrade(upgrade))
+    {
+      this.playCoinSound();
+    }
   }
   getCost(upgrade: UPGRADES): number {
     return this.gameStateService.getUpgradeCost(upgrade);
   }
+
+  coinSound = new Audio('assets/sounds/coin.mp3');
+
+  playCoinSound(): void {
+    this.coinSound.currentTime = 0;
+    this.coinSound.play()
+  }
+  
   
 }

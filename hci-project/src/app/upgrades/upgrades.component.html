@@ -1,44 +1,61 @@
-<p style="padding-left: 30%;">
-    Upgrades Menu
-  </p>
+<div class="menu">
+  <p class="title">
+      Upgrades Menu
+    </p>
+    
+    <p class ="button-row">
+      <a class="button1" (click)="buyUpgrade(upgrades.HEAVY_BALL_MULTIPLIER)">
+        <div>Heavier Ball</div>
+        <div class="cost">${{ getCost(upgrades.HEAVY_BALL_MULTIPLIER)}}</div>
+        <div><i class="fas fa-weight-hanging"></i></div>
+      </a>
+    
+      <a class="button1" (click)="buyUpgrade(upgrades.INVERSE_BOUNCE_MULTIPLER)">
+        <div>Less Bounce</div>
+        <div class="cost">${{ getCost(upgrades.INVERSE_BOUNCE_MULTIPLER)}}</div>
+        <i class="fa-solid fa-frog"></i>
+      </a>
+    </p>
+    
+    <p class ="button-row">
+      <a class="button1" (click)="buyUpgrade(upgrades.SMALL_BALL_MULTIPLER)">
+        <div>Shrink Ball</div>
+        <div class="cost">${{ getCost(upgrades.SMALL_BALL_MULTIPLER)}}</div>
+        <i class="fa-solid fa-minimize"></i>
+      </a>
+    
+      <a class="button1" (click)="buyUpgrade(upgrades.NEW_TEST)">
+        <div>New Test</div>
+        <div class="cost">${{ getCost(upgrades.NEW_TEST)}}</div>
+        <i class="fa-solid fa-font"></i>
+      </a>
+    </p>
   
-  <p style="display: flex">
-    <a class="button1" (click)="buyUpgrade(upgrades.HEAVY_BALL_MULTIPLIER)">
-      Heavier Ball ${{ getCost(upgrades.HEAVY_BALL_MULTIPLIER)}}
-    </a>
+    <p class ="button-row">
+      <a class="button1" (click)="buyUpgrade(upgrades.AUTOTYPER)">
+        <div>Auto Typer</div>
+        <div class="cost" >${{ getCost(upgrades.AUTOTYPER)}}</div>
+        <i class="fa-solid fa-robot"></i>
+      </a>
+      <a class="button1" (click)="buyUpgrade(upgrades.BUCKET_VAL_MULTIPLIER)">
+        <div>Better Buckets</div>
+        <div class="cost">${{ getCost(upgrades.BUCKET_VAL_MULTIPLIER)}}</div>
+        <i class="fa-solid fa-bucket"></i>
+      </a>
+    
+    </p>
   
-    <a class="button1" (click)="buyUpgrade(upgrades.INVERSE_BOUNCE_MULTIPLER)">
-      Less Bounce ${{ getCost(upgrades.INVERSE_BOUNCE_MULTIPLER)}}
-    </a>
-  </p>
-  
-  <p style="display: flex">
-    <a class="button1" (click)="buyUpgrade(upgrades.SMALL_BALL_MULTIPLER)">
-      Shrink Ball ${{ getCost(upgrades.SMALL_BALL_MULTIPLER)}}
-    </a>
-  
-    <a class="button1" (click)="buyUpgrade(upgrades.NEW_TEST)">
-      New Test ${{ getCost(upgrades.NEW_TEST)}}
-    </a>
-  </p>
-
-  <p style="display: flex">
-    <a class="button1" (click)="buyUpgrade(upgrades.AUTOTYPER)">
-      Auto Typer ${{ getCost(upgrades.AUTOTYPER)}}
-    </a>
-    <a class="button1" (click)="buyUpgrade(upgrades.BUCKET_VAL_MULTIPLIER)">
-      Better Buckets ${{ getCost(upgrades.BUCKET_VAL_MULTIPLIER)}}
-    </a>
-  
-  </p>
-
-  <p style="display: flex">
-    <a class="button1" (click)="buyUpgrade(upgrades.AUTOTYPER_SPEED)">
-      Faster Auto Typers ${{ getCost(upgrades.AUTOTYPER_SPEED)}}
-    </a>
-    <a class="button1" (click)="buyUpgrade(upgrades.REMOVE_PEG)">
-      Remove Peg ${{ getCost(upgrades.REMOVE_PEG)}}
-    </a>
-  
-  </p>
-  
+    <p class ="button-row" style="padding-bottom: 10px;">
+      <a class="button1" (click)="buyUpgrade(upgrades.AUTOTYPER_SPEED)">
+       <div>Faster Auto Typers</div>
+       <div class="cost">${{ getCost(upgrades.AUTOTYPER_SPEED)}}</div>
+       <i class="fa-solid fa-gauge-high"></i>
+      </a>
+      <a class="button1" (click)="buyUpgrade(upgrades.REMOVE_PEG)">
+        <div>Remove Peg</div>
+        <div class="cost">${{ getCost(upgrades.REMOVE_PEG)}}</div>
+        <i class="fa-solid fa-xmark"></i>
+      </a>
+    
+    </p>
+  </div>

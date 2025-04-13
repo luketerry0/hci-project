@@ -57,7 +57,7 @@ export class GameStateService {
     this.balanceSubject.next(this.currBalance);
   }
 
-  upgrade(curr_upgrade: UPGRADES) {
+  upgrade(curr_upgrade: UPGRADES): boolean {
     console.log(curr_upgrade);
     const cost = this.getUpgradeCost(curr_upgrade);
     // check if we can afford the upgrade
@@ -67,7 +67,9 @@ export class GameStateService {
   
       this.balanceSubject.next(this.currBalance);
       this.upgradeSubject.next(this.upgrades);
+      return true;
     }
+    return false;
   }
 
   getUpgradeCost(upgrade: UPGRADES): number {

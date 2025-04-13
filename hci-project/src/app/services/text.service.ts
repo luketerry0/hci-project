@@ -71,12 +71,16 @@ export class TextService {
       if(this.old_line.length > 15){
         this.old_line = this.old_line.slice(1);
       }
+      if(this.curr_passage.length > 1){
       this.old_line+= key;
+      }
+      else{
+        this.old_line = ""
+      }
       this.oldLineSubject.next(this.old_line);
       this.letterSubject.next(key);
       this.curr_passage = this.curr_passage.slice(1);
       while(this.curr_passage.length == 0){
-        this.old_line = ""
         this.curr_line = this.curr_line + 1
         this.curr_passage = this.file_lines[this.curr_line];
       }

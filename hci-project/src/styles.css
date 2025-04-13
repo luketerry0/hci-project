@@ -11,8 +11,9 @@
   --color-cursor: #000000;
   --color-typed: #aaa;
   --color-untyped: #333333;
-  --color-upgrade-bg: beige;
+  --color-upgrade-bg: #999999;
   --color-upgrade-text: #000000;
+  --color-menu: #eed18c;
   --transition-speed: 0.3s;
 }
 
@@ -31,6 +32,7 @@
   --color-untyped: #cccccc;
   --color-upgrade-bg: #444444;
   --color-upgrade-text: #e0e0e0;
+  --color-menu: #1e1e1e;
 }
 
 body {
