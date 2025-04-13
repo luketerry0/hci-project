@@ -36,7 +36,8 @@ export class PlinkoComponent {
   private text_service_subscription: Subscription | undefined;
   sketch: (s: p5) => void;
   colors = {
-    background: 'white'
+    background: 'white',
+    text: 'black'
   }
 
   constructor(private gss: GameStateService, private ts: TextService){
@@ -61,11 +62,13 @@ export class PlinkoComponent {
       console.log(isDark)
       if (isDark){
         this.colors = {
-          background: '#1e1e1e'
+          background: '#1e1e1e',
+          text: 'white'
         }
       }else{
         this.colors = {
-          background: 'white'
+          background: 'white',
+          text: 'black'
         }
       }
       this.p5Canvas.setup();
@@ -114,7 +117,7 @@ export class PlinkoComponent {
 
       // draw the pegs
       for (var i = 0; i < this.pegs.length; i++) {
-        this.pegs[i].show(s, this.colors.background);
+        this.pegs[i].show(s, this.colors.text);
       }
       await Promise.all(parts);
       console.log(this.particles.length)
