@@ -1,0 +1,10 @@
+<div class = "stats">
+    <p id = "title">Typing Stats</p>
+    <hr class="stats-divider" />
+<p id="chars">Characters Typed: {{correctChars}}</p>
+
+<p id="seconds">Seconds Elapsed: {{secondsElapsed}}</p>
+<p id="wpm">Words Per Minute: {{wpm.toFixed(1)}} <i class="fas fa-fire" [ngClass]="{ 'big-icon': wpm > 50, 'small-icon': wpm <= 50 }"></i></p>
+</div>
+
+<hr class="outside-divider">
