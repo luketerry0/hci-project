@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { TextService } from '../services/text.service';
 import { GameStateService } from '../services/game-state.service';
 import { UPGRADES } from '../types';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-autotyper',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './autotyper.component.html',
   styleUrl: './autotyper.component.css'
 })
