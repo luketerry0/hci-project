@@ -38,6 +38,7 @@
   z-index: 6;
   height: 100%;
   transition: background-color var(--transition-speed);
+  font-family: 'Fira Code', monospace;
 }
 
 .menu-button:hover {
@@ -107,6 +108,7 @@
 }
 
 .dark-mode-toggle {
+  font-family: 'Fira Code', monospace;
   background-color: var(--color-sidebar-bg);
   color: var(--color-sidebar-text);
   padding: 10px 20px;
