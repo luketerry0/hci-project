@@ -28,7 +28,7 @@ plinko {
   }
   
   .typer-container {
-    position: fixed;
+    position: relative;
     top: 15%;
     left: 50%;
     transform: translateX(-50%);
@@ -40,6 +40,18 @@ plinko {
   @media screen and (max-width: 600px) {
     .typer-container {
       top: 10%;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    app-typing-stats {
+      display: none !important;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    app-upgrades {
+      display: none !important;
     }
   }
   

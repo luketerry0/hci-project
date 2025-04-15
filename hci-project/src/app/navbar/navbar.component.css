@@ -17,6 +17,12 @@
   font-size:1.8em;
 }
 
+@media (max-width: 768px) {
+  .parent-container {
+    font-size: 1.3em; /* Adjust this as needed */
+  }
+}
+
 
 .menu-button {
   background-color: var(--color-navbar);
@@ -38,6 +44,26 @@
   background-color: var(--color-hover);
 }
 
+.mobile-only {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .mobile-only {
+    display: block;
+  }
+}
+
+.big-icon {
+  font-size: 2rem;
+  transition: font-size 0.3s ease;
+  color: red;
+  }
+  
+  .small-icon {
+  font-size: 1rem;
+  transition: font-size 0.3s ease;
+  }
 
 .sidebar {
   position: fixed;
@@ -49,7 +75,7 @@
   color: var(--color-sidebar-text);
   padding-top: 60px;
   transition: left var(--transition-speed) ease;
-  z-index: 1000;
+  z-index: 1001;
 }
 
 .sidebar-open {
@@ -68,7 +94,6 @@
 .sidebar ul li a {
   text-decoration: none;
   color: var(--color-sidebar-text);
-  display: block;
   padding: 15px 16px;
   font-size: 16px;
   height: 50px;
@@ -97,6 +122,7 @@
   background-color: var(--color-hover);
 }
 
+/* Ensure it's above all other elements */
 .close-btn {
   position: absolute;
   top: 10px;
@@ -108,8 +134,84 @@
   padding: 5px 10px;
   cursor: pointer;
   transition: background-color var(--transition-speed);
+  z-index: 1001;
 }
 
+/* Add this to ensure close button is visible even on fullscreen sidebar */
+.sidebar.right .close-btn {
+  z-index: 1001;
+}
 .close-btn:hover {
   background-color: #cc0000;
+}
+
+/* Existing .menu-button already styled nicely */
+.menu-button.right {
+  right: 0;
+  left: auto;
+}
+
+/* Ensure left and right buttons have same styling but stay separate */
+.menu-button.left {
+  left: 0;
+}
+
+/* Sidebar (Base) already styled well */
+
+/* Right sidebar base */
+.sidebar.right {
+  right: -250px;
+  left: auto;
+}
+.sidebar-open.right {
+  right: 0;
+}
+
+/* Optional full-screen on small screens */
+@media screen and (max-width: 768px) {
+  .sidebar.right,
+  .sidebar.left {
+    width: 100vw;
+  }
+
+  .sidebar-open.right {
+    right: 0;
+  }
+
+  .sidebar-open.left {
+    left: 0;
+  }
+}
+
+.button1 {
+  display: flex;
+  align-items: center;      /* vertically center items */
+  justify-content: space-between;  /* or "flex-start" if you don't want space between */
+  gap: 10px;                /* optional spacing between elements */
+  padding: 10px;
+  background-color: var(--color-sidebar-bg);
+  color: var(--color-sidebar-text);
+  text-decoration: none;
+}
+
+.cost{
+  color:rgb(255, 208, 0);
+  font-weight: bold;
+}
+
+  
+.stats-divider {
+  border: none;
+  height: 2px;
+  background-color: white;
+  width: 80%;
+  margin: 0 auto 10px auto;
+}
+
+#title{
+  text-align: center; 
+  padding-top: 10px; 
+  font-size: x-large;
+  margin-top: 0px;
+  margin-bottom: 5px;
 }

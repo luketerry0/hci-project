@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UPGRADES } from '../types';
 import { GameStateService } from '../services/game-state.service';
+import { TextService } from '../services/text.service';
 
 @Component({
   selector: 'navbar',
@@ -18,13 +19,53 @@ export class NavBarComponent {
   isSidebarOpen = false;
   darkMode = false; // For tracking dark mode
 
-  constructor(gss: GameStateService) {
+  screenWidth = window.innerWidth;
+  isMobile = this.screenWidth <= 768;
+  isUpgradesOpen = false;
+
+  text_service: TextService
+  correctChars: number = 0;
+  secondsElapsed: number = 0;
+  wpm: number = 0; // words per minute
+
+  calculateWpm(){
+    this.wpm = ((this.correctChars*60)/5)/this.secondsElapsed
+  }
+
+  constructor(gss: GameStateService, ts: TextService) {
     this.gameStateService = gss;
+
+    window.addEventListener('resize', () => {
+      this.screenWidth = window.innerWidth;
+      this.isMobile = this.screenWidth <= 768;
+    });
+    this.text_service = ts;
+
+    this.text_service.correctChars$.subscribe((chars) => {
+      this.correctChars = chars;
+      this.calculateWpm();
+    })
+
+      // increment the clock each second
+    setInterval(() => {
+    this.secondsElapsed = this.secondsElapsed + 1;
+    this.calculateWpm();
+  }, 1000); 
   }
 
   toggleDropdown(event: Event) {
     event.stopPropagation();
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  toggleUpgradesMenu(event: Event) {
+    event.stopPropagation();
+    this.isUpgradesOpen = !this.isUpgradesOpen;
+    if (this.isUpgradesOpen) this.isSidebarOpen = false;
+  }
+
+  getCost(upgrade: UPGRADES): number {
+    return this.gameStateService.getUpgradeCost(upgrade);
   }
 
   toggleSidebar(event: Event) {
@@ -48,6 +89,16 @@ export class NavBarComponent {
   }
 
   buyUpgrade(upgrade: UPGRADES) {
-    this.gameStateService.upgrade(upgrade);
+    if(this.gameStateService.upgrade(upgrade))
+      {
+        this.playCoinSound();
+      }
+  }
+
+  coinSound = new Audio('assets/sounds/coin.mp3');
+
+  playCoinSound(): void {
+    this.coinSound.currentTime = 0;
+    this.coinSound.play()
   }
 }

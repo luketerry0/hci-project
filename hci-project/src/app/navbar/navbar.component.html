@@ -1,11 +1,78 @@
 <div class="parent-container">
   <button class="menu-button" (click)="toggleSidebar($event)">Menu</button>
-  <div>Welcome to PhantomType! Let's get typing!</div>
+  <div>{{ isMobile ? "PhantomType" : "Welcome to PhantomType! Let's get typing!" }}</div>
+  <button class="menu-button right" *ngIf="isMobile" (click)="toggleUpgradesMenu($event)">Upgrades</button>
 </div>
 
 <div [ngClass]="{'sidebar-open': isSidebarOpen}" class="sidebar">
   <button class="close-btn" (click)="toggleSidebar($event)">X</button>
   <ul>
     <li><button class="dark-mode-toggle" (click)="toggleDarkMode($event)">Toggle Dark Mode</button></li>
+    <div class="mobile-only">
+      <p id="title">Typing Stats</p>
+      <hr class="stats-divider" />
+      <li><p id="chars">Characters Typed: {{ correctChars }}</p></li>
+      <li><p id="seconds">Seconds Elapsed: {{ secondsElapsed }}</p></li>
+      <li>
+        <p id="wpm">
+          Words Per Minute: {{ wpm.toFixed(1) }}
+          <i
+            class="fas fa-fire"
+            [ngClass]="{
+              'big-icon': wpm > 50,
+              'small-icon': wpm <= 50
+            }"
+          ></i>
+        </p>
+      </li>
+    </div>  </ul>
+</div>
+
+<div class="sidebar" [ngClass]="{'sidebar-open': isUpgradesOpen}">
+  <button class="close-btn" (click)="toggleUpgradesMenu($event)">X</button>
+  <ul>
+    <li>
+      <a class="button1" (click)="buyUpgrade(upgrades.HEAVY_BALL_MULTIPLIER)">
+        <div>Heavier Ball</div>
+        <div class="cost">${{ getCost(upgrades.HEAVY_BALL_MULTIPLIER) }}</div><i class="fas fa-weight-hanging"></i>
+      </a>
+    </li>
+    <li>
+    <a class="button1" (click)="buyUpgrade(upgrades.INVERSE_BOUNCE_MULTIPLER)">
+      <div>Less Bounce</div>
+      <div class="cost">${{ getCost(upgrades.INVERSE_BOUNCE_MULTIPLER)}}</div>
+      <i class="fa-solid fa-frog"></i>
+    </a>
+  </li>
+  <li>      <a class="button1" (click)="buyUpgrade(upgrades.SMALL_BALL_MULTIPLER)">
+    <div>Shrink Ball</div>
+    <div class="cost">${{ getCost(upgrades.SMALL_BALL_MULTIPLER)}}</div>
+    <i class="fa-solid fa-minimize"></i>
+  </a></li>
+  <li>      <a class="button1" (click)="buyUpgrade(upgrades.NEW_TEST)">
+    <div>New Test</div>
+    <div class="cost">${{ getCost(upgrades.NEW_TEST)}}</div>
+    <i class="fa-solid fa-font"></i>
+  </a></li>
+  <li>      <a class="button1" (click)="buyUpgrade(upgrades.AUTOTYPER)">
+    <div>Auto Typer</div>
+    <div class="cost" >${{ getCost(upgrades.AUTOTYPER)}}</div>
+    <i class="fa-solid fa-robot"></i>
+  </a></li>
+  <li>      <a class="button1" (click)="buyUpgrade(upgrades.BUCKET_VAL_MULTIPLIER)">
+    <div>Better Buckets</div>
+    <div class="cost">${{ getCost(upgrades.BUCKET_VAL_MULTIPLIER)}}</div>
+    <i class="fa-solid fa-bucket"></i>
+  </a></li>
+  <li>      <a class="button1" (click)="buyUpgrade(upgrades.AUTOTYPER_SPEED)">
+    <div>Faster Auto Typers</div>
+    <div class="cost">${{ getCost(upgrades.AUTOTYPER_SPEED)}}</div>
+    <i class="fa-solid fa-gauge-high"></i>
+   </a></li>
+  <li>      <a class="button1" (click)="buyUpgrade(upgrades.REMOVE_PEG)">
+    <div>Remove Peg</div>
+    <div class="cost">${{ getCost(upgrades.REMOVE_PEG)}}</div>
+    <i class="fa-solid fa-xmark"></i>
+  </a></li>
   </ul>
 </div>
