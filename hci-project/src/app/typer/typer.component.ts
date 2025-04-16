@@ -1,6 +1,8 @@
 import { Component, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
 import { TextService } from '../services/text.service';
 
+
+
 @Component({
   selector: 'app-typer',
   standalone: true,
@@ -12,6 +14,7 @@ export class TyperComponent implements AfterViewChecked {
   old_line: string = "";
   curr_line: string = "";
   public textLeft: string = '50%';
+
 
   @ViewChild('typedSpan') typedSpan!: ElementRef;
 

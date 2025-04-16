@@ -1,9 +1,10 @@
 <navbar></navbar>
 <counter></counter>
 <div class="typer-container">
-  <app-typer></app-typer>
+  <input #inp type="hidden">
+  <app-typer ></app-typer>
 </div>
-<div class="flex-container">
+<div class="flex-container" (click)="openMobileKeyboard()">
     <div class="left-column">
   <app-typing-stats></app-typing-stats>
   @for (typer of n_autotypers; track typer) {

@@ -44,22 +44,28 @@ export class PlinkoComponent {
     // create matter.js engine, world
     this.engine = this.Engine.create({velocityIterations: 1, positionIterations: 1, constraintIterations: 1});
     this.world = this.engine.world;
+    
+    // store the services which were injected into this component
     this.gameStateService = gss;
     this.textService = ts;
+
+    // get the initial upgrades and game state
     this.upgrades = this.gameStateService.getUpgrades();
     this.config = this.gameStateService.getGameState();
 
+    // when the user buys an upgrade change that in this component
     this.gameStateService.upgrade$.subscribe((upgrades) => {
       this.upgrades = upgrades;
       this.p5Canvas.setup();
     });
   
+    // when the user's game state changes due to certian upgrades, update the config in this component
     this.gameStateService.gameState$.subscribe((new_game_state) => {
       this.config = new_game_state;
     });
 
+    // when the user toggles between dark mode, change the colors accordingly
     this.gameStateService.darkMode$.subscribe((isDark) => {
-      console.log(isDark)
       if (isDark){
         this.colors = {
           background: '#1e1e1e',
@@ -77,6 +83,8 @@ export class PlinkoComponent {
     // Load the initial text
     this.textService.loadText(this.upgrades[UPGRADES.NEW_TEST]);
 
+    // this is the main sketch method, which is well documented in p5. 
+    // It is called many times per second to update the screen.
     this.sketch = (s: p5) => {
 
       s.setup = () => {
@@ -110,6 +118,7 @@ export class PlinkoComponent {
           }
         return true;
       }
+      // upgrade particles asyncronously for performance
       let parts = []
         for (var i = 0; i < this.particles.length; i++) {
           parts.push(updateParticle(i, s));
@@ -119,14 +128,11 @@ export class PlinkoComponent {
       for (var i = 0; i < this.pegs.length; i++) {
         this.pegs[i].show(s, this.colors.text);
       }
+
+      // await the particles which have been dropped
       await Promise.all(parts);
       console.log(this.particles.length)
       };
-      // code to drop a random letter when mouse is pressed
-      // s.mousePressed = () => {
-      //   // add a particle
-      //   // this.createParticle(s.mouseX, s.mouseY);
-      // }
     }
   }
 
@@ -135,36 +141,42 @@ export class PlinkoComponent {
   @ViewChild('canvasContainer') canvas!: ElementRef;
   width: number = 10;
   height: number = 10;
-  p5Canvas: any; //TODO make this typing better
+  p5Canvas: any; //p5 canvas does not support proper typing, unfortunately
 
+  // record the dimensions of the canvas
   ngAfterViewInit() {
     this.width = this.canvas.nativeElement.offsetWidth;
     this.height = this.canvas.nativeElement.offsetHeight;
   }
 
+  // creates a new ball at the specified coordinates
   createParticle(x: number, y: number, letter: string) {
     var p = new Particle(x,y,this.config.ball_radius, this.world, this.gameStateService, letter, this.upgrades);
     this.particles.push(p);
   }
 
+  // helper method to draw the plinko board
   private draw_plinko_board(s: p5){
+    // remove the pegs if they already exist (e. g. window is resized)
     this.pegs.forEach((peg) => {
       this.World.remove(this.world, peg.body);
     });
     this.pegs = [];
     this.buckets = [];
+
     // draw the plinko board
     const spacing_between_pegs = this.config.spacing_between_pegs;
     const peg_radius = this.config.peg_radius;
     let pegs_drawn = 0
     const removed_pegs = this.upgrades[UPGRADES.REMOVE_PEG];
+    // iterate over each peg
     for (let level = 0; level < this.rows; level++){
       for (let i = 0; i <= level; i++){
           // determine where the peg should be
           const peg_x = this.width / 2 + i*spacing_between_pegs- level*spacing_between_pegs/2;
           const peg_y = this.height / 4 + level*spacing_between_pegs;
           
-          // keep track of the peg
+          // draw the peg and store a reference to it
           if (pegs_drawn >= removed_pegs){
           var p = new Peg( peg_x, peg_y, peg_radius, this.world);
           this.pegs.push(p);
@@ -174,11 +186,12 @@ export class PlinkoComponent {
           
           // if this is the last row, make a bucket under it
           if (level == this.rows - 1 && i < level){
-            // calculate the value based on distance from the center peg
+            // calculate the currency value based on distance from the center peg
             const value = s.map(
               Math.abs(i - ((level-1)/2)), 0, ((level-1)/2), this.config.max_bucket, this.config.min_bucket
             );
 
+            // store a reference to the bucket
             var b = new Bucket(
               peg_x, peg_y + spacing_between_pegs/2, spacing_between_pegs, 30, value, 500);
             this.buckets.push(b);
@@ -187,22 +200,25 @@ export class PlinkoComponent {
     }
   }
 
+  // called when the component initializes
   ngOnInit() {
+
+    // when the user types a letter, drop a new ball
     this.text_service_subscription = this.textService.letterTyped$.subscribe((letter) => {
       this.createParticle(this.width / 2 + (Math.random()*10 - 5), (this.height/4) - 20, letter);
     })
   
+    // initialize the canvas
     this.p5Canvas = new p5(this.sketch);
   }
 
+  
+  // if the size of the window changes, recalculate and redraw p5 board
   @HostListener('window:resize', ['$event'])
   sizeChange(event: any) {
-    // if the size of the window changes, recalculate the p5 board
     this.width = this.canvas.nativeElement.offsetWidth;
     this.height = this.canvas.nativeElement.offsetHeight;
     this.p5Canvas.setup();
-    console.log(this.pegs);
   }
-
 
 }

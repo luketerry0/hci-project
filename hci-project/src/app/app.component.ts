@@ -1,4 +1,4 @@
-import { Component, HostListener, Type } from '@angular/core';
+import { Component, ElementRef, HostListener, Type, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { PlinkoComponent } from './plinko/plinko.component';
 import { NavBarComponent } from './navbar/navbar.component';
@@ -30,6 +30,8 @@ import { UpgradeObject, UPGRADES } from './types';
 export class AppComponent {
   // keep track of the number of autotypers
   n_autotypers: Array<number> = []
+  @ViewChild('inp')
+  inputElement!: ElementRef;
 
   constructor(gss: GameStateService){
     gss.upgrade$.subscribe((upgrades: UpgradeObject) => {
@@ -47,4 +49,10 @@ export class AppComponent {
       event.preventDefault();
     }
   }
+
+  openMobileKeyboard(){
+    this.inputElement.nativeElement.focus();
+  }
+
+
 }
