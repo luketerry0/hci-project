@@ -29,6 +29,7 @@ export class UpgradesComponent {
       this.not_enough_money = false;
     }
     else{
+      this.playNoMoneySound();
       this.not_enough_money = true;
     }
   }
@@ -43,6 +44,15 @@ export class UpgradesComponent {
   playCoinSound(): void {
     this.coinSound.currentTime = 0;
     this.coinSound.play()
+  }
+
+
+  noMoneySound = new Audio('assets/sounds/no_money.mp3');
+
+  // Plays no money sound when purchasing an upgrade
+  playNoMoneySound(): void {
+    this.noMoneySound.currentTime = 0;
+    this.noMoneySound.play()
   }
   
   
