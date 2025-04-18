@@ -25,6 +25,8 @@ export class NavBarComponent {
   correctChars: number = 0;
   secondsElapsed: number = 0;
   wpm: number = 0; // words per minute
+  not_enough_money = false;
+
 
   calculateWpm(){
     this.wpm = ((this.correctChars*60)/5)/this.secondsElapsed
@@ -93,6 +95,11 @@ export class NavBarComponent {
     if(this.gameStateService.upgrade(upgrade))
       {
         this.playCoinSound();
+        this.not_enough_money = false;
+      }
+      else{
+        this.playNoMoneySound();
+        this.not_enough_money = true;
       }
   }
 
@@ -103,5 +110,13 @@ export class NavBarComponent {
   playCoinSound(): void {
     this.coinSound.currentTime = 0;
     this.coinSound.play()
+  }
+
+  noMoneySound = new Audio('assets/sounds/no_money.mp3');
+
+  //Also borrowed from upgrades component
+  playNoMoneySound(): void {
+    this.noMoneySound.currentTime = 0;
+    this.noMoneySound.play()
   }
 }

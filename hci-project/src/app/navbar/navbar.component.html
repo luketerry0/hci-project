@@ -32,6 +32,7 @@
 <!-- Only displays upgrades menu sidebar if on mobile -->
 <div class="sidebar" [ngClass]="{'sidebar-open': isUpgradesOpen}">
   <button class="close-btn" (click)="toggleUpgradesMenu($event)">X</button>
+  <p class="error" *ngIf="not_enough_money">Not enough money to purchase</p>
   <ul>
     <li>
       <a class="button1" (click)="buyUpgrade(upgrades.HEAVY_BALL_MULTIPLIER)">

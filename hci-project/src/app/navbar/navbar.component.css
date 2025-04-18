@@ -156,6 +156,7 @@
   background-color: var(--color-sidebar-bg);
   color: var(--color-sidebar-text);
   text-decoration: none;
+  cursor: pointer;
 }
 
 .cost{
@@ -189,4 +190,10 @@
 .small-icon {
   font-size: 1rem;
   transition: font-size 0.3s ease;
+  }
+
+  .error{
+    color: red;
+    text-align: center;
+    margin-top: 10px;
   }
