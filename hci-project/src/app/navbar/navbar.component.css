@@ -1,4 +1,4 @@
-
+/* Holds all of the navbar */
 .parent-container {
   position: relative;
   top: 0;
@@ -16,14 +16,14 @@
   text-align: center;
   font-size:1.8em;
 }
-
-@media (max-width: 768px) {
+/* Adjusts font size for mobile screens */
+@media (max-width: 800px) {
   .parent-container {
-    font-size: 1.3em; /* Adjust this as needed */
+    font-size: 1.3em;
   }
 }
 
-
+/* Base style for menu button */
 .menu-button {
   background-color: var(--color-navbar);
   color: var(--color-navbar-text);
@@ -45,27 +45,18 @@
   background-color: var(--color-hover);
 }
 
+/* Disappears when not on mobile */
 .mobile-only {
   display: none;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .mobile-only {
     display: block;
   }
 }
 
-.big-icon {
-  font-size: 2rem;
-  transition: font-size 0.3s ease;
-  color: red;
-  }
-  
-  .small-icon {
-  font-size: 1rem;
-  transition: font-size 0.3s ease;
-  }
-
+/* Sidebar on menu button click */
 .sidebar {
   position: fixed;
   left: -250px;
@@ -107,6 +98,7 @@
   background-color: #575757;
 }
 
+/* Dark mode button */
 .dark-mode-toggle {
   font-family: 'Fira Code', monospace;
   background-color: var(--color-sidebar-bg);
@@ -124,7 +116,7 @@
   background-color: var(--color-hover);
 }
 
-/* Ensure it's above all other elements */
+/* Close button for sidebar menu */
 .close-btn {
   position: absolute;
   top: 10px;
@@ -139,57 +131,27 @@
   z-index: 1001;
 }
 
-/* Add this to ensure close button is visible even on fullscreen sidebar */
-.sidebar.right .close-btn {
-  z-index: 1001;
-}
 .close-btn:hover {
   background-color: #cc0000;
 }
 
-/* Existing .menu-button already styled nicely */
+/* Menu button on right side for mobile */
 .menu-button.right {
   right: 0;
   left: auto;
 }
 
-/* Ensure left and right buttons have same styling but stay separate */
-.menu-button.left {
+/* Regular menu button on left for desktop */
+.menu-button {
   left: 0;
 }
 
-/* Sidebar (Base) already styled well */
-
-/* Right sidebar base */
-.sidebar.right {
-  right: -250px;
-  left: auto;
-}
-.sidebar-open.right {
-  right: 0;
-}
-
-/* Optional full-screen on small screens */
-@media screen and (max-width: 768px) {
-  .sidebar.right,
-  .sidebar.left {
-    width: 100vw;
-  }
-
-  .sidebar-open.right {
-    right: 0;
-  }
-
-  .sidebar-open.left {
-    left: 0;
-  }
-}
-
+/* Below are used only one mobile screens when upgrade menu needs to be displayed as sidebar */
 .button1 {
   display: flex;
-  align-items: center;      /* vertically center items */
-  justify-content: space-between;  /* or "flex-start" if you don't want space between */
-  gap: 10px;                /* optional spacing between elements */
+  align-items: center; 
+  justify-content: space-between;
+  gap: 10px;  
   padding: 10px;
   background-color: var(--color-sidebar-bg);
   color: var(--color-sidebar-text);
@@ -217,3 +179,14 @@
   margin-top: 0px;
   margin-bottom: 5px;
 }
+
+.big-icon {
+  font-size: 2rem;
+  transition: font-size 0.3s ease;
+  color: red;
+  }
+  
+.small-icon {
+  font-size: 1rem;
+  transition: font-size 0.3s ease;
+  }

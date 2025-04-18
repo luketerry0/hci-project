@@ -1,9 +1,10 @@
+/* Icon used for wpm more than 50 wpm */
 .big-icon {
 font-size: 2rem;
 transition: font-size 0.3s ease;
 color: red;
 }
-
+/* Icon used for wpm less than 50 wpm */
 .small-icon {
 font-size: 1rem;
 transition: font-size 0.3s ease;
@@ -36,7 +37,7 @@ transition: font-size 0.3s ease;
 #chars, #wpm, #seconds {
     margin-top: 5px;
   }
-
+ /* Outside divder */
 .outside-divider {
     border: none;
     height: 2px;
@@ -44,7 +45,7 @@ transition: font-size 0.3s ease;
     margin: 10px auto;
     width: 80%;
   }
-  
+  /* Inside divider */
   .stats-divider {
     border: none;
     height: 2px;

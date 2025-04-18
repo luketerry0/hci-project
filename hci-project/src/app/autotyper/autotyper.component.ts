@@ -26,6 +26,7 @@ export class AutotyperComponent {
   INTERVAL_OFFSET= 400; //ms
 
   loadText(index: number) {
+    //Auto typer text filepath
     const filePath = `assets/texts/auto${index}.txt`;
   
     fetch(filePath)
@@ -41,6 +42,7 @@ export class AutotyperComponent {
       .catch((e) => console.error("Could not load file:", filePath, e));
   }
 
+  //Advances the auto typers by one character
   advance(){
     this.text_service.autoTyperCharacter(this.full_line[this.idx_in_line]);
     if (this.idx_in_line == this.full_line.length - 1){

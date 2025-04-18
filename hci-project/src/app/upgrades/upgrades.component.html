@@ -1,12 +1,18 @@
+<!-- Background menu -->
 <div class="menu">
+  <!-- Make the title -->
   <p class="title">
       Upgrades Menu
+    </p>  <p class="error" *ngIf="not_enough_money">
+      Not enough money to purchase
     </p>
-    
+    <!-- Every two buttons go in a button row -->
     <p class ="button-row">
       <a class="button1" (click)="buyUpgrade(upgrades.HEAVY_BALL_MULTIPLIER)">
         <div>Heavier Ball</div>
+        <!-- Changes the color and weight of the cost to make it stand out -->
         <div class="cost">${{ getCost(upgrades.HEAVY_BALL_MULTIPLIER)}}</div>
+        <!-- Icon from fontawesome -->
         <div><i class="fas fa-weight-hanging"></i></div>
       </a>
     

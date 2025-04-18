@@ -14,16 +14,14 @@ import { TextService } from '../services/text.service';
 export class NavBarComponent {
   gameStateService: GameStateService;
   upgrades = UPGRADES;
-  
-  isDropdownOpen = false;
-  isSidebarOpen = false;
+  isSidebarOpen = false; //For checking sidebar toggle
   darkMode = false; // For tracking dark mode
 
   screenWidth = window.innerWidth;
-  isMobile = this.screenWidth <= 768;
-  isUpgradesOpen = false;
+  isMobile = this.screenWidth <= 800; //For tracking if on mobile
+  isUpgradesOpen = false; //
 
-  text_service: TextService
+  text_service: TextService //TextService needed for tracking on mobile
   correctChars: number = 0;
   secondsElapsed: number = 0;
   wpm: number = 0; // words per minute
@@ -35,12 +33,15 @@ export class NavBarComponent {
   constructor(gss: GameStateService, ts: TextService) {
     this.gameStateService = gss;
 
+    //Will change to Mobile version if on smaller screen or screen is resized dynamically
     window.addEventListener('resize', () => {
       this.screenWidth = window.innerWidth;
-      this.isMobile = this.screenWidth <= 768;
+      this.isMobile = this.screenWidth <= 800;
     });
+    //Text Service for mobile
     this.text_service = ts;
 
+    //Only additional computation needed is listening to TextService
     this.text_service.correctChars$.subscribe((chars) => {
       this.correctChars = chars;
       this.calculateWpm();
@@ -53,21 +54,19 @@ export class NavBarComponent {
   }, 1000); 
   }
 
-  toggleDropdown(event: Event) {
-    event.stopPropagation();
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
+  //Toggles the upgrades menu
   toggleUpgradesMenu(event: Event) {
     event.stopPropagation();
     this.isUpgradesOpen = !this.isUpgradesOpen;
     if (this.isUpgradesOpen) this.isSidebarOpen = false;
   }
 
+  //Borrowed from upgrades component to independently calculate upgrade costs
   getCost(upgrade: UPGRADES): number {
     return this.gameStateService.getUpgradeCost(upgrade);
   }
 
+  //Toggles the menu sidebar
   toggleSidebar(event: Event) {
     // Prevent toggling the sidebar when the spacebar is pressed.
     if (event instanceof KeyboardEvent && event.key === ' ') {
@@ -77,6 +76,7 @@ export class NavBarComponent {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
+  //Togles dark mode
   toggleDarkMode(event: Event) {
     event.stopPropagation();
     this.darkMode = !this.darkMode;
@@ -88,6 +88,7 @@ export class NavBarComponent {
     this.gameStateService.setDarkMode(this.darkMode);
   }
 
+  //Also borrowed from upgrades component
   buyUpgrade(upgrade: UPGRADES) {
     if(this.gameStateService.upgrade(upgrade))
       {
@@ -95,8 +96,10 @@ export class NavBarComponent {
       }
   }
 
+  //Also borrowed from upgrades component
   coinSound = new Audio('assets/sounds/coin.mp3');
 
+  // Plays coin sound when purchasing an upgrade
   playCoinSound(): void {
     this.coinSound.currentTime = 0;
     this.coinSound.play()

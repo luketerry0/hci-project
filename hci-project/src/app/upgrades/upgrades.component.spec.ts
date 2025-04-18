@@ -1,3 +1,4 @@
+// Base angular generated component ts
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UpgradesComponent } from './upgrades.component';

@@ -1,26 +1,5 @@
-/* .button1 {
-    font-size: medium;
-    width: 100%;
-    height: 100px;
-    margin-left: 10%;
-    color: var(--color-upgrade-text);
-    background: var(--color-upgrade-bg);
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
-    border-radius: 10px;
-    box-shadow: 2px 2px 5px gray;
-    border: none;
-    text-align: center;
-    padding: 15px;
-    transition: background-color var(--transition-speed);
-  }
-  
-  .button1:active {
-    box-shadow: none;
-  } */
-
-  .button1 {
+/* Makes the upgrades buttons */
+.button1 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -53,29 +32,40 @@
     background-color:rgb(174, 174, 174)
 }
 
+/* Background for upgrades buttons */
 .menu{
     background-color: var(--color-menu);
     border-radius: 15px;
 
 }
 
+/* Puts each button in a row */
 .button-row {
     display: flex;
-    justify-content: center; /* this centers the buttons horizontally */
-    gap: 1rem; /* optional: spacing between buttons */
+    justify-content: center;
+    gap: 1rem;
     padding-left: 10px;
     padding-right: 10px;
   }
 
+/* Title block */
 .title{
     text-align: center; 
     padding-top: 10px; 
     font-size: x-large;
     margin-top: 0px;
+    margin-bottom: 10px;
 }
+/* Cost color */
 .cost{
     color:rgb(255, 208, 0);
     font-size: 1.3rem;
     font-weight: bold;
+}
+
+.error{
+    color: red;
+    text-align: center;
+    margin-top: 10px;
 }
   

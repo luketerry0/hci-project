@@ -17,6 +17,7 @@ export class CounterComponent {
   tickInstance: any;
   constructor(private gss: GameStateService){
 
+    //Only needs to listen to the current balance from GameStateService
     this.subscription = gss.currBalance$.subscribe((currBalance: number) => {
       this.currBalance = currBalance;
     });

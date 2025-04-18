@@ -7,6 +7,7 @@ plinko {
     background-color: transparent; 
   }
   
+  /* Sizing for other app components */
   app-upgrades {
     width: 25%;
     height: 90vh;
@@ -37,6 +38,7 @@ plinko {
     pointer-events: none;
   }
   
+  /* Adjust sizing for mobile screens */
   @media screen and (max-width: 600px) {
     .typer-container {
       top: 10%;

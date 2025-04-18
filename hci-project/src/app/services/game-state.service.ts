@@ -88,7 +88,7 @@ export class GameStateService {
   getUpgradeCost(upgrade: UPGRADES): number {
     const base = this.upgrade_costs[upgrade];
     const level = this.upgrades[upgrade] || 0;
-    // raises the price of an upgrade based on the number of times it's been purchased
+    // raises the price of an upgrade based on the number of times it's been purchased expontentially
     return Math.floor(base * Math.pow(1.5, level));
   }
 

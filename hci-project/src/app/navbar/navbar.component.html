@@ -1,9 +1,10 @@
 <div class="parent-container">
   <button class="menu-button" (click)="toggleSidebar($event)">Menu</button>
+  <!-- Change the title if on mobile -->
   <div>{{ isMobile ? "PhantomType" : "Welcome to PhantomType! Let's get typing!" }}</div>
   <button class="menu-button right" *ngIf="isMobile" (click)="toggleUpgradesMenu($event)">Upgrades</button>
 </div>
-
+<!-- Regular menu sidebar - can add as many settings as is needed here -->
 <div [ngClass]="{'sidebar-open': isSidebarOpen}" class="sidebar">
   <button class="close-btn" (click)="toggleSidebar($event)">X</button>
   <ul>
@@ -28,6 +29,7 @@
     </div>  </ul>
 </div>
 
+<!-- Only displays upgrades menu sidebar if on mobile -->
 <div class="sidebar" [ngClass]="{'sidebar-open': isUpgradesOpen}">
   <button class="close-btn" (click)="toggleUpgradesMenu($event)">X</button>
   <ul>
