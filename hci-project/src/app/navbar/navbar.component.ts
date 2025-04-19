@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { UPGRADES } from '../types';
 import { GameStateService } from '../services/game-state.service';
 import { TextService } from '../services/text.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'navbar',
@@ -17,8 +20,12 @@ export class NavBarComponent {
   isSidebarOpen = false; //For checking sidebar toggle
   darkMode = false; // For tracking dark mode
 
+  private secondsElapsedSubject = new Subject<number>();
+  secondsElapsed$ = this.secondsElapsedSubject.asObservable();
+
   screenWidth = window.innerWidth;
   isMobile = this.screenWidth <= 800; //For tracking if on mobile
+  isDesktop = this.screenWidth >= 800; //For tracking if on desktop
   isUpgradesOpen = false; //
 
   text_service: TextService //TextService needed for tracking on mobile
@@ -32,7 +39,7 @@ export class NavBarComponent {
     this.wpm = ((this.correctChars*60)/5)/this.secondsElapsed
   }
 
-  constructor(gss: GameStateService, ts: TextService) {
+  constructor(gss: GameStateService, ts: TextService, public dialog: MatDialog) {
     this.gameStateService = gss;
 
     //Will change to Mobile version if on smaller screen or screen is resized dynamically
@@ -49,11 +56,6 @@ export class NavBarComponent {
       this.calculateWpm();
     })
 
-      // increment the clock each second
-    setInterval(() => {
-    this.secondsElapsed = this.secondsElapsed + 1;
-    this.calculateWpm();
-  }, 1000); 
   }
 
   //Toggles the upgrades menu
@@ -118,5 +120,20 @@ export class NavBarComponent {
   playNoMoneySound(): void {
     this.noMoneySound.currentTime = 0;
     this.noMoneySound.play()
+  }
+
+  //Opens a help dialog box
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '450px',
+      data: { message: "Start typing with the word \"Economy\" above the plinko board. More text will appear as you type. Purchase upgrades using the menu on the right as you play to improve your plinko board! The menu in the upper left allows you to toggle dark mode if desired. Click the Help button in the upper right to see this message again." }
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      // Start clock *after* the dialog closes
+      setInterval(() => {
+        this.secondsElapsed++;
+        this.calculateWpm();
+      }, 1000);
+    });
   }
 }

@@ -3,6 +3,7 @@
   <!-- Change the title if on mobile -->
   <div>{{ isMobile ? "PhantomType" : "Welcome to PhantomType! Let's get typing!" }}</div>
   <button class="menu-button right" *ngIf="isMobile" (click)="toggleUpgradesMenu($event)">Upgrades</button>
+  <button class="menu-button right" *ngIf="isDesktop" (click)="openDialog()">Help</button>
 </div>
 <!-- Regular menu sidebar - can add as many settings as is needed here -->
 <div [ngClass]="{'sidebar-open': isSidebarOpen}" class="sidebar">
