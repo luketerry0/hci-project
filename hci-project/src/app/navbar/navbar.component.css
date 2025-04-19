@@ -140,10 +140,6 @@
   right: 0;
   left: auto;
 }
-.menu-button two {
-  right: auto;
-  left: auto;
-}
 
 /* Regular menu button on left for desktop */
 .menu-button {
